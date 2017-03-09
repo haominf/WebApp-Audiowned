@@ -18,6 +18,7 @@ From client:
 - Time taken for person to pick an answer (depends on the mode the user picks)
 - Total score of every player
 - We will be taking user location data as well as the user input for what genre and difficulty they choose.  With these parameters, users will be placed in a match against each other.  As the match is being played, their answers for each round are collected along with the time it took to answer.  When the match ends, each player’s total scores are also collected.
+
 From Spotify API:
 - Album art
 - We will be collecting songs from Spotify to use for the game.  These will be taken from their curated “moods” and “genres” playlists.  We will also be retrieving the album art from the songs, which will then be shown to the players’ as they try to guess the correct answer.
