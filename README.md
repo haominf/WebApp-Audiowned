@@ -23,3 +23,5 @@ From Spotify API:
 - Album art
 - We will be collecting songs from Spotify to use for the game.  These will be taken from their curated “moods” and “genres” playlists.  We will also be retrieving the album art from the songs, which will then be shown to the players’ as they try to guess the correct answer.
 - User's profile picture
+
+![Image of mockups](https://drive.google.com/open?id=0B3sBC4tcnPNMZnU2WTdnUHpxYlU)
