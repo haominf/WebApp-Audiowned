@@ -30,3 +30,6 @@ From Spotify API:
 ![Image of mockups](mockups1/4.png)
 ![Image of mockups](mockups1/5.png)
 ![Image of mockups](mockups1/6.png)
+
+#Comments by Ming
+* I was going to grill you to NOT list out technologies used as features as they mean very little but you addressed my concerns later on in data collection.
