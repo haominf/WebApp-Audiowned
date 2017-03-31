@@ -1,5 +1,5 @@
 var express = require('express');
-var fs = require(fs);
+var fs = require('fs');
 var app = express();
 
 var port = process.env.PORT || 8080;
@@ -8,7 +8,7 @@ var port = process.env.PORT || 8080;
 app.set('view engine', 'ejs');
 
 // make express look in the public directory for assets (css/js/img)
-app.use(express.static(__dirname + '/css'));
+app.use(express.static(__dirname + '/public'));
 
 // set the home page route
 app.get('/', (req, res) => {
