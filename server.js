@@ -8,7 +8,7 @@ var port = process.env.PORT || 8080;
 app.set('view engine', 'ejs');
 // make express look in the public directory for assets (css/js/img)
 app.set('views', __dirname + '/views/pages');
-// virtual path prefix - doesn't actually exist
+// virtual path prefix - "puts" css/js/img in this dir
 app.use('/static', express.static('public'));
 
 // set the home page route
