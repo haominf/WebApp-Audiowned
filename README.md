@@ -1,5 +1,6 @@
 # comp 20 team 14 - audiowned
 ### Ever feel the need to prove to your friends that you’re the bigger hip hop head? Wanna flex your knowledge of today’s top music?  Now you can -- compete against your friends (or nearby strangers) to show off what you know.
+##### [check us out](https://audiowned.herokuapp.com)
 
 We plan to create a multiplayer game in which the users choose a genre of music.  Brief clips of songs are played, and users compete against each other, racing to be the first to correctly name the song.  Using geolocation, users are matched to others that are playing closest to them based on the mode they choose.  Points are awarded depending on the time it took for them to pick the correct song.  The player with the most points at the end of 10 rounds is declared the winner.
 
