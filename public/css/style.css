@@ -1,12 +1,71 @@
 /* stylesheet */
 body {
-	background-image: url("bg.gif");
-	background-repeat: no-repeat;
+	/*background-image: url("bg.gif");*/
+	/*background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-position: center;
-	background-size: cover;
-	font-family: "Century Gothic", sans-serif;
-    font-size: 30px;
-    font-color: white;
+	background-size: cover;*/
+        background-color: black;
+	font-family: "Century Gothic ", sans-serif;
+        font-size: 30px;
+        font-color: white;
 	color: #eafffd;
+}
+
+h1 {
+        font-family: "Source Code Pro", sans-serif;
+        font-weight: lighter;
+        font-size: 60px;
+        font-color: white;
+        text-align: center;
+        letter-spacing: 8px;
+        margin-top: 200px;
+        margin-bottom: 20px;
+}
+
+#start {
+        background: black;
+        border: 1px solid white;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-family: "Source Code Pro", sans-serif;
+        font-weight: lighter;
+        font-size: 20px;
+        color: white;
+        text-align: center;
+        letter-spacing: 3px;
+}
+
+#start:hover {
+        background-color: white;
+        color: black;
+}
+
+.button {
+        background: black;
+        border: 1px solid white;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-family: "Source Code Pro", sans-serif;
+        font-weight: lighter;
+        font-size: 15px;
+        color: white;
+        text-align: center;
+        letter-spacing: 3px;
+}
+
+.button:hover {
+        background-color: white;
+        color: black;
+}
+
+.open>.dropdown-menu {
+        background-color: black;
+        color: white;
+        font-family: "Source Code Pro", sans-serif;
+        font-weight: lighter;
+}
+
+nav {
+        text-align: center;
 }
