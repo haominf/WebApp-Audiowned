@@ -3,11 +3,15 @@
     "description": "a multiplayer music game",
     "version": "0.0.1",
     "main": "server.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tuftsdev/comp20-s2017-team14"
+    },
     "scripts": {
         "start": "node server.js"
     },
     "dependencies": {
-        "ejs": "~1.0.0",
+        "ejs": "latest",
         "express": "latest",
         "mongodb": "latest"
     }
