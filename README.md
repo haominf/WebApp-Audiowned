@@ -1,4 +1,4 @@
-# comp 20 team 14 - audiowned
+# comp 20 team 14 - AUDIOWNED
 ### Ever feel the need to prove to your friends that you’re the bigger hip hop head? Wanna flex your knowledge of today’s top music?  Now you can -- compete against your friends (or nearby strangers) to show off what you know.
 ##### [check us out](https://audiowned.herokuapp.com)
 
