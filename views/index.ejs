@@ -16,8 +16,14 @@
        <script src="js/bootstrap.min.js"></script>
        <script>
                function redirect() {
-                   //DO SOMETHING
+                       var xml = new XMLHttpRequest();
+                       var url = "/login";
+                       xml.open("POST", url, true);
+                       var id = "jello-cubes";
+                       xml.send(id);
+                       console.log(xml.responseText);
                }
+
        </script>
 </head>
 
@@ -30,5 +36,6 @@
                 <button type="button" class="button" onclick="redirect();">LOG IN TO SPOTIFY</button>
 
         </nav>
+
 </body>
 </html>

@@ -35,8 +35,9 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-app.get('/login', function(req, res) {
+app.post('/login', function(req, res) {
 
+  var id = req.body.id;
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -45,11 +46,13 @@ app.get('/login', function(req, res) {
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
-      client_id: client_id,
+      client_id: id,
       scope: scope,
       redirect_uri: redirect_uri,
       state: state
     }));
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.send("yay");
 });
 
 app.get('/callback', function(req, res) {
