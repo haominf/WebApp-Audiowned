@@ -10,6 +10,8 @@
 #### What we want to accomplish next week:
 - connect mongoDB to our app
     - store user data
+        - username/name
+        - uri to profile picture
 - gameplay
     - fetching public playlists from spotify
     - functional framework for gameplay:
