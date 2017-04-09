@@ -48,6 +48,7 @@ app.post('/login', (req, res) => {
         querystring.stringify({
             response_type: 'code',
             client_id: client.client_id,
+            client_id: client_id,
             scope: scope,
             redirect_uri: redirect_uri,
             state: state
