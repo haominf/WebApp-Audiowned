@@ -5,36 +5,37 @@
         <title>Audiowned - Home</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="css/style.css" type="text/css" />
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
         <!-- Latest compiled JavaScript -->
-       <script src="js/bootstrap.min.js"></script>
+       <script src="/static/js/bootstrap.min.js"></script>
        <script>
-               function redirect() {
-                       var xml = new XMLHttpRequest();
-                       var url = "/login";
-                       xml.open("POST", url, true);
-                       var id = "jello-cubes";
-                       xml.send(id);
-                       console.log(xml.responseText);
-               }
-
+           function sendReq() {
+               /*
+               var login = document.getElementById('username').value;
+               var info = { 'username': username };
+               var form = document.createElement('form');
+               */
+           }
        </script>
 </head>
-
 <body>
         <header>
-		<h1>AUDIOWNED</h1>
+		    <h1>AUDIOWNED</h1>
         </header>
-
         <nav>
-                <button type="button" class="button" onclick="redirect();">LOG IN TO SPOTIFY</button>
-
+            <div>
+                <form id="login" action="/login" method="post">
+                    <label for="username">Username</label>
+                    <input name="username" type="text">
+                    <input type="submit" class="button" />
+                </form>
+            </div>
         </nav>
 
 </body>
