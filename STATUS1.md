@@ -16,3 +16,6 @@
     - fetching public playlists from spotify
     - functional framework for gameplay:
         - timers, buttons, sounds
+
+#Comments by Ming
+* Feel free to talk to some other teams about the Spotify API.  Example: team 24.
