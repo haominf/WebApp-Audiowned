@@ -3,5 +3,3 @@ node_modules/*
 *.log
 <<<<<<< HEAD
 client.json
-=======
->>>>>>> 9067af2a6bddd783bebc9bd9a9589404d2dc6c64
