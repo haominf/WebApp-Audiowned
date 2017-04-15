@@ -8,8 +8,10 @@
 - how to serve dynamic content based on user's info
 - our game involves timing, so we have to start the game at the same time for
   both players, otherwise one would have an advantage
+ - debug after pushing to heroku 
 
 #### What we want to accomplish next week:
+- debug internal error on heroku
 - use spotify API to fetch user data and store it in our database (mongo)
 - allow user to choose a level of difficulty & genres of music (Spotify API
   provides methods for that)
