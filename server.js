@@ -11,11 +11,13 @@ var redirect_uri = 'https://audiowned.herokuapp.com/';
 
 var generateRandomString = function(length) {
     var text = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz' + 
+        '0123456789';
 
     for (var i = 0; i < length; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
+    
     return text;
 };
 
@@ -38,11 +40,15 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+app.get('/home', (req, res) => {
+    res.render('home');
+});
+
 app.post('/login', (req, res) => {
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
     var scope = 'user-read-email';
-    console.log('logging in');
+    // res.setHeader("Access-Control-Allow-Origin", "*");
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
@@ -50,10 +56,8 @@ app.post('/login', (req, res) => {
             scope: scope,
             redirect_uri: redirect_uri,
             state: state
-        }
-    ));
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.send('hello');
+        })
+    );
 });
 
 app.get('/callback', function(req, res) {
@@ -79,7 +83,8 @@ app.get('/callback', function(req, res) {
                 grant_type: 'authorization_code'
             },
             headers: {
-                'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+                'Authorization': 'Basic ' + (new Buffer(client_id + ':' 
+                    + client_secret).toString('base64'))
             },
             json: true
         };
@@ -96,7 +101,8 @@ app.get('/callback', function(req, res) {
                 request.get(options, function(error, response, body) {
                     console.log(body);
                 });
-                // we can also pass the token to the browser to make requests from there
+                // we can also pass the token to the browser to make requests 
+                // from there
                 res.redirect('/#' +
                 querystring.stringify({
                     access_token: access_token,
