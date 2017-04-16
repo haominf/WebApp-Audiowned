@@ -22,8 +22,9 @@ var generateRandomString = function(length) {
 };
 
 var stateKey = 'spotify_auth_state';
-var port = process.env.PORT || 8080;
 
+// set port number
+app.set('port', (process.env.PORT || 8080));
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 // make express look in the views/pages directory for assets (css/js/img)
@@ -143,6 +144,6 @@ app.get('/refresh_token', function(req, res) {
     });
 });
 
-app.listen(port, () => {
-    console.log('App running on localhost:' + port);
+app.listen(app.get('port'), function() {
+    console.log('App is running on port', app.get('port'));
 });
