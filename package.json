@@ -14,6 +14,6 @@
     "body-parser": "latest",
     "ejs": "latest",
     "express": "latest",
-    "mongodb": "^2.2.25"
+    "mongodb": "latest"
   }
 }

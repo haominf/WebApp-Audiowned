@@ -14,15 +14,6 @@
 
         <!-- Latest compiled JavaScript -->
        <script src="/static/js/bootstrap.min.js"></script>
-       <script>
-           function sendReq() {
-               /*
-               var login = document.getElementById('username').value;
-               var info = { 'username': username };
-               var form = document.createElement('form');
-               */
-           }
-       </script>
 </head>
 <body>
         <header>
@@ -31,9 +22,9 @@
         <nav>
             <div>
                 <form id="login" action="/login" method="post">
-                    <label for="username">Username</label>
-                    <input name="username" type="text">
-                    <input type="submit" class="button" />
+                    <label for="username">Username</label><br />
+                    <input name="username" type="text"><br />
+                    <input type="submit" class="button" value="Log in" />
                 </form>
             </div>
         </nav>
