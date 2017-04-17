@@ -20,7 +20,6 @@ var generateRandomString = function(length) {
 };
 
 var stateKey = 'spotify_auth_state';
-
 var port = process.env.PORT || 8080;
 
 // set the view engine to ejs
@@ -43,7 +42,7 @@ app.post('/login', (req, res) => {
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
     var scope = 'user-read-email';
-
+    console.log('logging in');
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
@@ -53,6 +52,8 @@ app.post('/login', (req, res) => {
             state: state
         }
     ));
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.send('hello');
 });
 
 app.get('/callback', function(req, res) {

@@ -1,19 +1,19 @@
 {
-    "name": "audiowned",
-    "description": "a multiplayer music game",
-    "version": "0.0.1",
-    "main": "server.js",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/tuftsdev/comp20-s2017-team14"
-    },
-    "scripts": {
-        "start": "node server.js"
-    },
-    "dependencies": {
-        "ejs": "latest",
-        "express": "latest",
-        "mongodb": "latest",
-        "body-parser": "latest"
-    }
+  "name": "audiowned",
+  "description": "a multiplayer music game",
+  "version": "0.0.1",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuftsdev/comp20-s2017-team14"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "latest",
+    "ejs": "latest",
+    "express": "latest",
+    "mongodb": "latest"
+  }
 }
