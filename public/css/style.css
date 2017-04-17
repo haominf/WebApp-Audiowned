@@ -99,6 +99,51 @@ nav {
   }
 }
 
+#loadheader {
+        margin-top: 30px;
+        margin-left: 20px;
+        overflow: hidden;
+        position: relative;
+        text-align: left;
+        font-size: 35px;
+        letter-spacing: 4px;
+
+}
+
+#userimage {
+        width: 350px;
+        height: 350px;
+        overflow: hidden;
+        margin-top: 20px;
+        margin: 20px;
+        margin-left: 20%;
+        position: relative;
+        float: left;
+}
+#oppimage {
+        width: 350px;
+        height: 350px;
+        margin-top: 20px;
+        overflow: hidden;
+        margin-left: 40px;
+        position: relative;
+        float: left;
+}
+
+img {
+        position: absolute;
+        min-height: 100%;
+        min-width: 100%;
+        left: -100%;
+        right: -100%;
+        top: -100%;
+        bottom: -100%;
+        margin: auto;
+        height: 350px;
+        width: auto;
+}
+
+
 #loading {
         display:none;
 }
