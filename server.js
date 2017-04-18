@@ -38,6 +38,10 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+app.get('/play', (req, res) => {
+	res.render('play_tracks');
+});
+
 app.post('/login', (req, res) => {
     var state = generateRandomString(16);
     res.cookie(stateKey, state);

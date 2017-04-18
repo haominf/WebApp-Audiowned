@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "body-parser": "latest",
+	"cookie-parser": "latest",
     "ejs": "latest",
     "express": "latest",
-    "mongodb": "latest"
+    "mongodb": "latest",
+	"request": "latest"
   }
 }
