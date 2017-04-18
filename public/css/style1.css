@@ -23,23 +23,6 @@ h1 {
         margin-bottom: 20px;
 }
 
-#start {
-        background: black;
-        border: 1px solid white;
-        padding-left: 10px;
-        padding-right: 10px;
-        font-family: "Source Code Pro", sans-serif;
-        font-weight: lighter;
-        font-size: 20px;
-        color: white;
-        text-align: center;
-        letter-spacing: 3px;
-}
-
-#start:hover {
-        background-color: white;
-        color: black;
-}
 
 .button {
         background: black;
@@ -52,6 +35,8 @@ h1 {
         color: white;
         text-align: center;
         letter-spacing: 3px;
+        width: 300px;
+
 }
 
 .button:hover {
@@ -59,46 +44,11 @@ h1 {
         color: black;
 }
 
-.open>.dropdown-menu {
-        background-color: white;
-        font-family: "Source Code Pro", sans-serif;
-        font-weight: lighter;
-        width: 5px;
-}
-
-nav {
+#buttons {
+        margin-top: 20px;
         text-align: center;
+        float: center;
 }
-
-/*
- * CSS Page Transitions
- * Don't forget to add vendor prefixes!
- */
-.m-scene {
-  /** Basic styles for an animated element */
-  .scene_element {
-    animation-duration: 0.25s;
-    transition-timing-function: ease-in;
-    animation-fill-mode: both;
-
-  }
-
-  /** An element that fades in */
-  .scene_element--fadein {
-    animation-name: fadeIn;
-  }
-
-  /** An element that fades in and slides up */
-  .scene_element--fadeinup {
-    animation-name: fadeInUp;
-  }
-
-  /** An element that fades in and slides from the right */
-  .scene_element--fadeinright {
-    animation-name: fadeInRight;
-  }
-}
-
 #loadheader {
         margin-top: 30px;
         margin-left: 20px;
@@ -115,20 +65,12 @@ nav {
         height: 350px;
         overflow: hidden;
         margin-top: 20px;
-        margin: 20px;
-        margin-left: 20%;
         position: relative;
-        float: left;
+        text-align: center;
+        margin: auto;
+
 }
-#oppimage {
-        width: 350px;
-        height: 350px;
-        margin-top: 20px;
-        overflow: hidden;
-        margin-left: 40px;
-        position: relative;
-        float: left;
-}
+
 
 img {
         position: absolute;
@@ -141,9 +83,4 @@ img {
         margin: auto;
         height: 350px;
         width: auto;
-}
-
-
-#loading {
-        display:none;
 }
