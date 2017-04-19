@@ -2,6 +2,9 @@
   "name": "audiowned",
   "description": "a multiplayer music game",
   "version": "0.0.1",
+  "engines": {
+    "node": "latest"  
+  },
   "main": "server.js",
   "repository": {
     "type": "git",
@@ -11,9 +14,12 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "body-parser": "latest",
-    "ejs": "latest",
-    "express": "latest",
-    "mongodb": "latest"
+      "express": "latest",
+      "request": "latest",
+      "querystring": "latest",
+      "body-parser": "latest",
+      "cookie-parser": "latest", 
+      "ejs": "latest",
+      "mongodb": "latest"
   }
 }

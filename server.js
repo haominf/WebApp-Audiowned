@@ -1,11 +1,12 @@
 var express = require('express');
 var request = require('request');
-var client = require('./client.json');
 var querystring = require('querystring');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var fs = require('fs');
 var app = express();
+
+var client = require('./client.json');
 
 var redirect_uri = 'https://audiowned.herokuapp.com/callback';
 
