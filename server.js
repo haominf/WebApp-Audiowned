@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var client_id = '67fd18a6482b41a5aa0c8b71b1517989'; // Your client id
 var client_secret = '7a42b826ed224ed0a94634b2d12152b6'; // Your secret
 var redirect_uri = 'https://audiowned.herokuapp.com/callback'; // local: 'http://localhost:8888/callback'
-
+var player_json;
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -130,11 +130,12 @@ app.get('/callback', function(req, res) {
 
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
+          player_json = JSON.parse(body);
           console.log(body);
         });
-        console.log('Tokens:');
-        console.log('access token: ' + access_token);
-        console.log('refresh access token: ' + refresh_token);
+        // console.log('Tokens:');
+        // console.log('access token: ' + access_token);
+        // console.log('refresh access token: ' + refresh_token);
         // we can also pass the token to the browser to make requests from there
         
         // res.redirect('/#' +
@@ -142,6 +143,9 @@ app.get('/callback', function(req, res) {
         //     access_token: access_token,
         //     refresh_token: refresh_token
         //   }));
+        var player_name = player_json['display_name'];
+        console.log("the player's name is " + player_name);
+
 
         res.render('home');
 
