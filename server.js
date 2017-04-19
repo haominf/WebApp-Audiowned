@@ -138,7 +138,7 @@ app.get('/callback', function(req, res) {
           player_json = body;
           player_name = player_json['display_name'];
           player_pic = player_json['images'][0]['url'];
-          res.render('home' /*, {Name:player_name}*/);
+          res.render('home' , {Name:player_name});
         });
         // console.log('Tokens:');
         // console.log('access token: ' + access_token);
