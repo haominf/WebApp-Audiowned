@@ -134,6 +134,7 @@ app.get('/callback', function(req, res) {
           player_json = body;
           player_name = player_json['display_name'];
           console.log("the player's name is " + player_name);
+          res.render('home', {Name:player_name});
         });
         // console.log('Tokens:');
         // console.log('access token: ' + access_token);
@@ -145,8 +146,6 @@ app.get('/callback', function(req, res) {
         //     access_token: access_token,
         //     refresh_token: refresh_token
         //   }));
-        res.render('home', {Name:player_name});
-
       } else {
         res.redirect('/#' +
           querystring.stringify({
