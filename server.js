@@ -7,7 +7,7 @@ var cookieParser = require('cookie-parser');
 var fs = require('fs');
 var app = express();
 
-var redirect_uri = 'https://audiowned.herokuapp.com/';
+var redirect_uri = 'https://audiowned.herokuapp.com/callback';
 
 var generateRandomString = function(length) {
     var text = '';
@@ -17,7 +17,6 @@ var generateRandomString = function(length) {
     for (var i = 0; i < length; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     }
-    
     return text;
 };
 
@@ -31,6 +30,16 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views/pages');
 // virtual path prefix - "puts" css/js/img in this dir
 app.use('/static', express.static('public'));
+
+// set up mongo for future use 
+var mongoUri = process.env.MONGODB_URI || process.env.MONGOLAB_URI ||
+    process.env.MONGOHQ_URL || 'mongodb://localhost/';
+var MongoClient = require('mongodb').MongoClient;
+var format = require('util').format;
+var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
+	db = databaseConnection;
+});
+
 
 app.use(bodyParser.urlencoded({
     extended: true
