@@ -16,14 +16,14 @@
        <script src="/static/js/bootstrap.min.js"></script>
 
        <script>
-                function redirect() {
-                       var xml = new XMLHttpRequest();
-                       var url = "/login";
-                       xml.open("POST", url, true);
+                console.log('hello');
+                function enter_name() {
+                       var request = new XMLHttpRequest();
+                       var url = "/id";
                        var id = $("#id").val();
                        console.log(id);
-                       xml.send(id);
-                       console.log(xml.responseText);
+                       request.open("POST", url, true);
+                       request.send("id=" + id);
                }
        </script>
 
@@ -41,9 +41,10 @@
                 </form>
             </div> -->
             <div>
-                <label for="username">Username</label><br />
+                <label for="username">Create/Enter Your Username</label><br />
                 <input id="id" type="text"><br />
-                <button type="button" class="button" onclick="redirect();">LOG IN TO SPOTIFY</button>
+                <!-- <button type="button" class="button" onclick="redirect();">LOG IN TO SPOTIFY</button> -->
+                <a href="/login" class="button" onclick="enter_name();">LOG IN TO PLAY</a>
             </div>
         </nav>
 
