@@ -86,6 +86,10 @@ app.get('/login', function(req, res) {
     }));
 });
 
+app.get('/loading', function(req, res) {
+  res.render('loading', {Name:player_name, Pic_URL:player_pic});
+});
+
 app.get('/callback', function(req, res) {
 
   // your application requests refresh and access tokens
@@ -133,9 +137,8 @@ app.get('/callback', function(req, res) {
           console.log(body);
           player_json = body;
           player_name = player_json['display_name'];
-          console.log("the player's name is " + player_name);
           player_pic = player_json['images'][0]['url'];
-          res.render('home', {Name:player_name, Pic_URL:player_pic});
+          res.render('home', {Name:player_name});
         });
         // console.log('Tokens:');
         // console.log('access token: ' + access_token);
