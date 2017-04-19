@@ -143,7 +143,7 @@ app.get('/callback', function(req, res) {
         //     access_token: access_token,
         //     refresh_token: refresh_token
         //   }));
-        var player_name = player_json['display_name'];
+        var player_name = player_json[display_name];
         console.log("the player's name is " + player_name);
 
 
