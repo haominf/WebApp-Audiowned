@@ -57,18 +57,18 @@ app.get('/home', (req, res) => {
     res.render('home');
 });
 
-var username_created;
-app.post('/id', (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST'); 
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype'); 
+// var username_created;
+// app.post('/id', (req, res) => {
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     res.setHeader('Access-Control-Allow-Methods', 'POST'); 
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype'); 
     
-    username_created = req.body.id;
-    console.log('created username: ' + username_created);
-    //to be add into mongodb
+//     username_created = req.body.id;
+//     console.log('created username: ' + username_created);
+//     //to be add into mongodb
 
-    res.send(null);
-});
+//     res.send(null);
+// });
 
 app.get('/login', function(req, res) {
 
