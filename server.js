@@ -38,7 +38,7 @@ app.set('views', __dirname + '/views/pages');
 // virtual path prefix - "puts" css/js/img in this dir
 app.use('/static', express.static('public')).use(cookieParser());
 
-// set up mongo for future use 
+// set up mongo for future use
 var mongoUri = process.env.MONGODB_URI || process.env.MONGOLAB_URI ||
     process.env.MONGOHQ_URL || 'mongodb://localhost/';
 var MongoClient = require('mongodb').MongoClient;
@@ -59,9 +59,9 @@ app.get('/home', (req, res) => {
 // var username_created;
 // app.post('/id', (req, res) => {
 //     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Methods', 'POST'); 
-//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype'); 
-    
+//     res.setHeader('Access-Control-Allow-Methods', 'POST');
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype');
+
 //     username_created = req.body.id;
 //     console.log('created username: ' + username_created);
 //     //to be add into mongodb
@@ -138,13 +138,13 @@ app.get('/callback', function(req, res) {
           player_json = body;
           player_name = player_json['display_name'];
           player_pic = player_json['images'][0]['url'];
-          res.render('home', {Name:player_name});
+          res.render('home' /*, {Name:player_name}*/);
         });
         // console.log('Tokens:');
         // console.log('access token: ' + access_token);
         // console.log('refresh access token: ' + refresh_token);
         // we can also pass the token to the browser to make requests from there
-        
+
         // res.redirect('/#' +
         //   querystring.stringify({
         //     access_token: access_token,

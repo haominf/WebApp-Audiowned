@@ -12,6 +12,9 @@ body {
 	color: #eafffd;
 }
 
+h3 {
+        display: none;
+}
 h1 {
         font-family: "Source Code Pro", sans-serif;
         font-weight: lighter;
