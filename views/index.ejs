@@ -17,16 +17,13 @@
        <script src="js/bootstrap.min.js"></script>
        <script>
                function redirect() {
-<<<<<<< HEAD
-                   console.log("hello");
-=======
                        var xml = new XMLHttpRequest();
                        var url = "/login";
                        xml.open("POST", url, true);
-                       var id = "jello-cubes";
+                       var id = $("button").text();
+                       console.log(id);
                        xml.send(id);
                        console.log(xml.responseText);
->>>>>>> 137d804d73c1fae71f2ef8b0e84dae68d3cde139
                }
 
        </script>
@@ -34,7 +31,7 @@
 
 <body>
         <header>
-		<h1>AUDIOWNED</h1>
+    <h1>AUDIOWNED</h1>
         </header>
 
         <nav>

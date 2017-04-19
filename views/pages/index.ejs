@@ -14,18 +14,36 @@
 
         <!-- Latest compiled JavaScript -->
        <script src="/static/js/bootstrap.min.js"></script>
+
+       <script>
+                function redirect() {
+                       var xml = new XMLHttpRequest();
+                       var url = "/login";
+                       xml.open("POST", url, true);
+                       var id = $("#id").val();
+                       console.log(id);
+                       xml.send(id);
+                       console.log(xml.responseText);
+               }
+       </script>
+
 </head>
 <body>
         <header>
 		    <h1>AUDIOWNED</h1>
         </header>
         <nav>
-            <div>
+            <!-- <div>
                 <form id="login" action="/login" method="post">
                     <label for="username">Username</label><br />
                     <input name="username" type="text"><br />
                     <input type="submit" class="button" value="Log in" />
                 </form>
+            </div> -->
+            <div>
+                <label for="username">Username</label><br />
+                <input id="id" type="text"><br />
+                <button type="button" class="button" onclick="redirect();">LOG IN TO SPOTIFY</button>
             </div>
         </nav>
 
