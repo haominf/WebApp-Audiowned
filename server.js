@@ -87,7 +87,7 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/loading', function(req, res) {
-  res.render('loading', {Name:player_name, Pic_URL:player_pic});
+  res.render('home', {Name:player_name, Pic_URL:player_pic});
 });
 
 app.get('/matched', function(req, res) {
