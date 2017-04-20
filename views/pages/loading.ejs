@@ -23,8 +23,7 @@
                        console.log(id);
                        request.open("GET", url, true);
                        request.send(null);
-               }
-               setTimeout(matched, 5000);
+               }    
        </script>
 
 </head>
@@ -42,7 +41,7 @@
 		<h1 id="loadheader">SEARCHING FOR OPPONENT...</h1>
         </header>
 
-        <div id="pics">
+        <div id="pics" onload="setTimeout(matched, 3000)">
 
                 <div id="userimage">
 
