@@ -12,19 +12,15 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
         <!-- Latest compiled JavaScript -->
-       <script src="/static/js/bootstrap.min.js"></script>
+       <script src="/static/gitjs/bootstrap.min.js"></script>
 
        <script>
-                setTimeout(matched, 5000);
-                console.log('beofre function call');
-                function matched() {
-                       console.log('test test');
-                       var request = new XMLHttpRequest();
-                       var url = "/matched";
-                       console.log(id);
-                       request.open("GET", url, true);
-                       request.send(null);
-               }
+               $(document).ready(function() {
+                    $.getJSON('/matched', function(data) {
+                        console.log('success');
+                        console.log(data);
+                    });
+                });
        </script>
 
 </head>
@@ -50,7 +46,7 @@
                 </div>
                 <div id="oppimage">
 
-                        <img src="https://eadb.org/wp-content/uploads/2015/08/profile-placeholder.jpg" alt="placeholder" width=400px>
+                        <img src="http://eadb.org/wp-content/uploads/2015/08/profile-placeholder.jpg" alt="placeholder" width=400px>
                 </div>
         </div>
 
