@@ -3,56 +3,83 @@
 <html>
 <head>
         <meta charset="utf-8" />
-        <title>Audiowned -Home</title>
+        <title>Audiowned - Home</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/style.css" type="text/css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
         <!-- Latest compiled JavaScript -->
-       <script src="/static/js/bootstrap.min.js"></script>
+       <script src="js/bootstrap.min.js"></script>
+
+       <script>
+                function loadPage() {
+                        $("#home-page").addClass('animated slideOutRight').delay(350).hide(1);
+                        $("#loading-page").addClass('animated slideInLeft');
+
+                        $("#loading-page").show();
+
+                }
+       </script>
+
 </head>
 
 <body>
-        <!-- <audio autoplay loop>
-            <source src="bgmusic.mp3" type="audio/mpeg">
-        </audio>
-        <audio controls autoplay>
-            <source src="bgmusic.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio> -->
 
-        <header>
-		<h1>AUDIOWNED</h1>
-        </header>
-        <nav>
-                <div class="btn-group">
-                  <button type="button" class="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    LEVEL <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">EASY</a></li>
-                    <li><a href="#">MEDIUM</a></li>
-                    <li><a href="#">HARD</a></li>
-                  </ul>
+        <div id ="home-page">
+
+                <header>
+        		<h1>AUDIOWNED</h1>
+                </header>
+
+                <nav>
+                        <div class="btn-group">
+                          <button type="button" class="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            LEVEL <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">EASY</a></li>
+                            <li><a href="#">MEDIUM</a></li>
+                            <li><a href="#">HARD</a></li>
+                          </ul>
+                        </div>
+
+                        <button id="start" onclick="loadPage()" >START</button>
+
+                        <div class="btn-group">
+                          <button type="button" class="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            GENRE <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">TOP HITS</a></li>
+                            <li><a href="#">COUNTRY</a></li>
+                            <li><a href="#">ROCK</a></li>
+                          </ul>
+                        </div>
+                </nav>
+        </div>
+
+        <div id ="loading-page">
+
+                <header>
+        		<h1 class="animated slideInLeft" id="loadheader">SEARCHING FOR OPPONENT...</h1>
+                </header>
+
+                <div class="animated slideInLeft">
+
+                        <div id="userimage">
+
+                                <img src="https://scontent.fluk1-1.fna.fbcdn.net/v/t31.0-8/16707354_1270731589629046_5534878168568381697_o.jpg?oh=51f6c7e662abb9b9ad3e9d619ab21f88&oe=59556726" alt="l8k8" width=400px>
+                        </div>
+                        <div id="oppimage">
+
+                                <img src="http://eadb.org/wp-content/uploads/2015/08/profile-placeholder.jpg" alt="placeholder" width=400px>
+                        </div>
                 </div>
-
-                <a href="/loading" type="button" id="start">START</a>
-
-                <div class="btn-group">
-                  <button type="button" class="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    GENRE <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">TOP HITS</a></li>
-                    <li><a href="#">COUNTRY</a></li>
-                    <li><a href="#">ROCK</a></li>
-                  </ul>
-                </div>
-        </nav>
+        </div>
 </body>
 </html>
