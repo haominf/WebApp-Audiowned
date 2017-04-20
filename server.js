@@ -91,6 +91,7 @@ app.get('/loading', function(req, res) {
 });
 
 app.get('/matched', function(req, res) {
+  console.log('enter matched');
   res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
 
