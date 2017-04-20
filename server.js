@@ -53,7 +53,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/home', (req, res) => {
-    res.render('home&loading');
+    res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
 });
 
 // var username_created;
@@ -143,7 +143,7 @@ app.get('/callback', function(req, res) {
           player_json = body;
           player_name = player_json['display_name'];
           player_pic = player_json['images'][0]['url'];
-          res.render('home&loading');
+          res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
         });
         // console.log('Tokens:');
         // console.log('access token: ' + access_token);
