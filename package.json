@@ -3,7 +3,7 @@
   "description": "a multiplayer music game",
   "version": "0.0.1",
   "engines": {
-    "node": "latest"  
+    "node": "latest"
   },
   "main": "server.js",
   "repository": {
@@ -14,12 +14,13 @@
     "start": "node server.js"
   },
   "dependencies": {
-      "express": "latest",
-      "request": "latest",
-      "querystring": "latest",
-      "body-parser": "latest",
-      "cookie-parser": "latest", 
-      "ejs": "latest",
-      "mongodb": "latest"
+    "animate.css": "^3.5.2",
+    "body-parser": "latest",
+    "cookie-parser": "latest",
+    "ejs": "latest",
+    "express": "latest",
+    "mongodb": "latest",
+    "querystring": "latest",
+    "request": "latest"
   }
 }
