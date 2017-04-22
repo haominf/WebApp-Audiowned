@@ -1,0 +1,58 @@
+<!-- dont need it anymore -->
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8" />
+        <title>Audiowned -Matching</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/style.css" type="text/css" />
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+       <script src="/static/gitjs/bootstrap.min.js"></script>
+
+       <script>
+               // $(document).ready(function() {
+               //      $.getJSON('/matched', function(data) {
+               //          console.log('success');
+               //          console.log(data);
+               //      });
+               //  });
+
+            setTimeout("location.href = '/matched';",5000);
+
+       </script>
+
+</head>
+
+<body>
+        <!-- <audio autoplay loop>
+            <source src="bgmusic.mp3" type="audio/mpeg">
+        </audio>
+        <audio controls autoplay>
+            <source src="bgmusic.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio> -->
+
+        <header>
+		<h1 id="loadheader">SEARCHING FOR OPPONENT...</h1>
+        </header>
+
+        <div id="pics">
+
+                <div id="userimage">
+
+                        <img src="<%=Pic_URL%>" alt="l8k8" width=400px>
+                </div>
+                <div id="oppimage">
+
+                        <img src="http://eadb.org/wp-content/uploads/2015/08/profile-placeholder.jpg" alt="placeholder" width=400px>
+                </div>
+        </div>
+
+</body>
+</html>

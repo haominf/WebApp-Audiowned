@@ -20,7 +20,8 @@
                        var xml = new XMLHttpRequest();
                        var url = "/login";
                        xml.open("POST", url, true);
-                       var id = "jello-cubes";
+                       var id = $("button").text();
+                       console.log(id);
                        xml.send(id);
                        console.log(xml.responseText);
                }

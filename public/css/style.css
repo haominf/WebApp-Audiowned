@@ -12,6 +12,10 @@ body {
 	color: #eafffd;
 }
 
+h3 {
+        display: none;
+        font-family: 'Comic Sans';
+}
 h1 {
         font-family: "Source Code Pro", sans-serif;
         font-weight: lighter;
@@ -70,34 +74,6 @@ nav {
         text-align: center;
 }
 
-/*
- * CSS Page Transitions
- * Don't forget to add vendor prefixes!
- */
-.m-scene {
-  /** Basic styles for an animated element */
-  .scene_element {
-    animation-duration: 0.25s;
-    transition-timing-function: ease-in;
-    animation-fill-mode: both;
-
-  }
-
-  /** An element that fades in */
-  .scene_element--fadein {
-    animation-name: fadeIn;
-  }
-
-  /** An element that fades in and slides up */
-  .scene_element--fadeinup {
-    animation-name: fadeInUp;
-  }
-
-  /** An element that fades in and slides from the right */
-  .scene_element--fadeinright {
-    animation-name: fadeInRight;
-  }
-}
 
 #loadheader {
         margin-top: 30px;
@@ -144,6 +120,6 @@ img {
 }
 
 
-#loading {
-        display:none;
+#loading-page {
+        display: none;
 }
