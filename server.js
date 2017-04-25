@@ -52,7 +52,7 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 app.get('/play', (req, res) => {
 	res.render('play_tracks');
 });
