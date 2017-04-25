@@ -16,12 +16,17 @@
   "dependencies": {
     "animate.css": "^3.5.2",
     "body-parser": "latest",
-    "cookie-parser": "latest",
+	"cookie-parser": "latest",
     "ejs": "latest",
     "express": "latest",
     "mongodb": "latest",
+<<<<<<< HEAD
     "querystring": "latest",
     "request": "latest",
     "progressbar.js": "latest"
+=======
+	"request": "latest",
+    "querystring": "latest"
+>>>>>>> a79854c04709510aa18ac14f8d18c010b172695d
   }
 }

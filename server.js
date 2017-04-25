@@ -52,8 +52,31 @@ app.get('/', (req, res) => {
     res.render('index');
 });
 
+<<<<<<< HEAD
+app.get('/play', (req, res) => {
+	res.render('play_tracks');
+});
+
+app.post('/login', (req, res) => {
+    var state = generateRandomString(16);
+    res.cookie(stateKey, state);
+    var scope = 'user-read-email';
+    console.log('logging in');
+    res.redirect('https://accounts.spotify.com/authorize?' +
+        querystring.stringify({
+            response_type: 'code',
+            client_id: client.client_id,
+            scope: scope,
+            redirect_uri: redirect_uri,
+            state: state
+        }
+    ));
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.send('hello');
+}
 app.get('/home', (req, res) => {
-    res.render('home');
+    res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
+
 });
 
 // var username_created;
@@ -87,7 +110,7 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/loading', function(req, res) {
-  res.render('home', {Name:player_name, Pic_URL:player_pic});
+  res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
 });
 
 app.get('/matched', function(req, res) {
@@ -143,7 +166,7 @@ app.get('/callback', function(req, res) {
           player_json = body;
           player_name = player_json['display_name'];
           player_pic = player_json['images'][0]['url'];
-          res.render('home');
+          res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
         });
         // console.log('Tokens:');
         // console.log('access token: ' + access_token);

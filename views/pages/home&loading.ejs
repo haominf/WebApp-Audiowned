@@ -22,7 +22,6 @@
                         $("#loading-page").addClass('animated slideInLeft');
 
                         $("#loading-page").show();
-
                 }
        </script>
 
@@ -69,11 +68,15 @@
         		<h1 class="animated slideInLeft" id="loadheader">SEARCHING FOR OPPONENT...</h1>
                 </header>
 
+                <script type="text/javascript">
+                setTimeout("location.href = '/matched';",9000);
+                </script>
+                
                 <div class="animated slideInLeft">
 
                         <div id="userimage">
 
-                                <img src="https://scontent.fluk1-1.fna.fbcdn.net/v/t31.0-8/16707354_1270731589629046_5534878168568381697_o.jpg?oh=51f6c7e662abb9b9ad3e9d619ab21f88&oe=59556726" alt="l8k8" width=400px>
+                                <img src="<%=Pic_URL%>" alt="l8k8" width=400px>
                         </div>
                         <div id="oppimage">
 
