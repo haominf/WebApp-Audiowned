@@ -21,6 +21,7 @@
     "express": "latest",
     "mongodb": "latest",
     "querystring": "latest",
-    "request": "latest"
+    "request": "latest",
+    "progressbar.js": "latest"
   }
 }

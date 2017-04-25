@@ -1,0 +1,118 @@
+/* stylesheet */
+body {
+        background-color: black;
+	font-family: "Century Gothic ", sans-serif;
+        font-size: 30px;
+        font-color: white;
+	color: #eafffd;
+}
+
+h3 {
+        display: none;
+        font-family: 'Comic Sans';
+}
+h1 {
+        font-family: "Source Code Pro", sans-serif;
+        font-weight: lighter;
+        font-size: 60px;
+        font-color: white;
+        text-align: center;
+        letter-spacing: 8px;
+        margin-top: 200px;
+        margin-bottom: 20px;
+}
+#buttons {
+        text-align: center;
+        margin-top: 5%;
+        float: center;
+
+}
+
+.button {
+        background: black;
+        border: 1px solid white;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-family: "Source Code Pro", sans-serif;
+        font-weight: lighter;
+        font-size: 15px;
+        color: white;
+        text-align: center;
+        letter-spacing: 3px;
+        width: 200px;
+}
+
+.button:hover {
+        background-color: white;
+        color: black;
+}
+
+nav {
+        text-align: center;
+}
+
+
+#loadheader {
+        margin-top: 30px;
+        margin-left: 20px;
+        overflow: hidden;
+        position: relative;
+        text-align: center;
+        font-size: 35px;
+        letter-spacing: 4px;
+
+}
+
+#userpic {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        margin: 20px;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+}
+
+#opppic {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        margin: 20px;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+
+}
+
+
+#progress {
+        width: 35%;
+        height: 3px;
+        margin-left: 2%;
+        margin-right: 2%;
+        text-align: center;
+        display: inline-block;
+        vertical-align: middle;
+}
+
+img {
+        position: absolute;
+        min-height: 100%;
+        min-width: 100%;
+        left: -100%;
+        right: -100%;
+        top: -100%;
+        bottom: -100%;
+        margin: auto;
+        height: 150px;
+        width: auto;
+        display: inline;
+}
+
+
+
+#pics {
+        display: inline-table;
+        width: 100%;
+        text-align: center;
+}
