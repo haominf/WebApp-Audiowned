@@ -19,3 +19,12 @@
   the high scores of each category
 - allow user to choose a level of difficulty & genres of music (Spotify API
   provides methods for that)
+
+# Comments by Ming
+* accidentally committed 40+ times => not a problem
+* debug internal error on heroku => what happened here?
+* definitely top two priorities:
+- set up Mongo and set up the access and display of information, which will be
+  the high scores of each category
+- allow user to choose a level of difficulty & genres of music (Spotify API
+  provides methods for that)
