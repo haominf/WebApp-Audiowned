@@ -118,9 +118,9 @@ app.get('/matched', function(req, res) {
   res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
 
-// app.get('/game', function(req, res) {
-//         res.render('game', {Name:player_name, Pic_URL:player_pic});
-// });
+app.get('/game', function(req, res) {
+        res.render('game', {Name:player_name, Pic_URL:player_pic});
+});
 
 app.get('/callback', function(req, res) {
 
