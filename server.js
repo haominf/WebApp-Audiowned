@@ -122,7 +122,6 @@ app.get('/game', function(req, res) {
         res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
-
 app.post('/submit', function(req, res) {
         console.log(req.body);
 	console.log("hi");

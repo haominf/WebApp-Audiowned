@@ -36,23 +36,22 @@
                });
 
                function sendChoice(num) {
-                       var url = "https://www.audiowned.herokuapp.com/submit";
-                //        sendRequest(url , num);
-                        console.log(data);
+                        var url = "https://www.audiowned.herokuapp.com/submit";
+                        console.log(num);
                         var req = new XMLHttpRequest();
-                        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                         req.open("POST", url, true);
-                        req.send(data);
+                        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        req.send(num);
 
                 };
 
 
-                setTimeout(function(){
-                       $("#gamePage").addClass('animated slideOutRight');
-                        setTimeout(function(){
-                                window.location.href="/index";
-                        }, 800);
-                }, 30000);
+                // setTimeout(function(){
+                //        $("#gamePage").addClass('animated slideOutRight');
+                //         setTimeout(function(){
+                //                 window.location.href="/index";
+                //         }, 800);
+                // }, 30000);
 
        </script>
 </head>
