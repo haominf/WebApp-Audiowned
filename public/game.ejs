@@ -37,15 +37,16 @@
                });
 
                function sendChoice(num) {
-                       console.log(num);
+                       sendRequest('https://www.audiowned.herokuapp.com/submit', num);
                };
 
+               function sendRequest(url, data) {
+                        var req = new XMLHttpRequest();
+                        req.open("POST", url, true);
+                        req.send(data);
+                }
 
-
-       </script>
-       <script>
-
-               setTimeout(function(){
+                setTimeout(function(){
                        $("#gamePage").addClass('animated slideOutRight');
                         setTimeout(function(){
                                 window.location.href="index.ejs";
@@ -90,25 +91,25 @@
 
         </div>
         <div id="scores">
-                <h3 id="ownScore">SCORE: 10</h3>
+                <h3 id="ownScore">SCORE: <%=ownScore=> </h3>
 
-                <h3 id="oppScore">SCORE: 5</h3>
+                <h3 id="oppScore">SCORE: <%=oppScore=> </h3>
         </div>
 
 
 
         <div id="buttons">
                 <div>
-                     <button class="button" onclick="sendChoice('1')" >SONG 1</button>
+                     <button class="button" onclick="sendChoice('1')" > <%=Song1%></button>
                 </div>
                 <div>
-                    <button class="button" onclick="sendChoice('2')" >SONG 2</button>
+                    <button class="button" onclick="sendChoice('2')" > <%=Song2%> </button>
                 </div>
                 <div>
-                    <button class="button" onclick="sendChoice('3')" >SONG 3</button>
+                    <button class="button" onclick="sendChoice('3')" > <%=Song3%> </button>
                 </div>
                 <div>
-                    <button class="button" onclick="sendChoice('4')" >SONG 4</button>
+                    <button class="button" onclick="sendChoice('4')" > <%=Song3%> </button>
                 </div>
 
         </div>

@@ -37,18 +37,19 @@
                });
 
                function sendChoice(num) {
-                       console.log(num);
+                       sendRequest('https://www.audiowned.herokuapp.com/submit', num);
                };
 
+               function sendRequest(url, data) {
+                        var req = new XMLHttpRequest();
+                        req.open("POST", url, true);
+                        req.send(data);
+                }
 
-
-       </script>
-       <script>
-
-               setTimeout(function(){
+                setTimeout(function(){
                        $("#gamePage").addClass('animated slideOutRight');
                         setTimeout(function(){
-                                window.location.href="/index";
+                                window.location.href="index.ejs";
                         }, 800);
                 }, 30000);
 
@@ -76,32 +77,39 @@
                         <img src="https://scontent.fluk1-1.fna.fbcdn.net/v/t31.0-8/16707354_1270731589629046_5534878168568381697_o.jpg?oh=51f6c7e662abb9b9ad3e9d619ab21f88&oe=59556726" alt="l8k8" width=150px>
                 </div>
 
+
                 <div id="progress"></div>
+
 
                 <div id="opppic">
 
                         <img src="http://eadb.org/wp-content/uploads/2015/08/profile-placeholder.jpg" alt="placeholder" width=150px>
                 </div>
 
+
+
+
         </div>
         <div id="scores">
-                <h3 id="ownScore">SCORE: 10</h3>
+                <h3 id="ownScore">SCORE: <%=ownScore=> </h3>
 
-                <h3 id="oppScore">SCORE: 5</h3>
+                <h3 id="oppScore">SCORE: <%=oppScore=> </h3>
         </div>
+
+
 
         <div id="buttons">
                 <div>
-                     <button class="button" onclick="sendChoice('1')" >SONG 1</button>
+                     <button class="button" onclick="sendChoice('1')" > <%=Song1%></button>
                 </div>
                 <div>
-                    <button class="button" onclick="sendChoice('2')" >SONG 2</button>
+                    <button class="button" onclick="sendChoice('2')" > <%=Song2%> </button>
                 </div>
                 <div>
-                    <button class="button" onclick="sendChoice('3')" >SONG 3</button>
+                    <button class="button" onclick="sendChoice('3')" > <%=Song3%> </button>
                 </div>
                 <div>
-                    <button class="button" onclick="sendChoice('4')" >SONG 4</button>
+                    <button class="button" onclick="sendChoice('4')" > <%=Song3%> </button>
                 </div>
 
         </div>
