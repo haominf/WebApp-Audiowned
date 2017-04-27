@@ -19,7 +19,6 @@
        <script>
                 $(document).ready(function(){
                        var bar = new ProgressBar.Line(progress, {
-
                                strokeWidth: 4,
                                duration: 30000,
                                color: '#FFEA82',
@@ -37,14 +36,16 @@
                });
 
                function sendChoice(num) {
-                       sendRequest('https://www.audiowned.herokuapp.com/submit', num);
-               };
-
-               function sendRequest(url, data) {
+                       var url = "https://www.audiowned.herokuapp.com/submit";
+                //        sendRequest(url , num);
+                        console.log(data);
                         var req = new XMLHttpRequest();
+                        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                         req.open("POST", url, true);
                         req.send(data);
-                }
+                       
+                };
+
 
                 setTimeout(function(){
                        $("#gamePage").addClass('animated slideOutRight');
