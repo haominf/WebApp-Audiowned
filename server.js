@@ -123,7 +123,7 @@ app.get('/game', function(req, res) {
 });
 
 
-app.post('/submit', function(req, res) => {
+app.post('/submit', function(req, res) {
         console.log(req.body);
 	console.log("hi");
 });
