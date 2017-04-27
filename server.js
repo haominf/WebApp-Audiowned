@@ -4,8 +4,10 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var SpotifyWebApi = require('spotify-web-api-node');
 var fs = require('fs');
 var app = express();
+var spotifyApi = new SpotifyWebApi();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -120,11 +122,35 @@ app.get('/matched', function(req, res) {
 
 app.get('/game', function(req, res) {
         console.log('in game');
-        res.render('game', {Name:player_name, Pic_URL:player_pic});
+		res.render('game', {Name:player_name, Pic_URL:player_pic});
+
 });
 
 app.post('/submit', function(req, res) {
         console.log(req.body);
+		spotifyApi.searchTracks('Love', function(err, data) {
+		  if (err) {
+		    console.error('Something went wrong', err.message);
+		    return;
+		  }
+
+		  // Print some information about the results
+		  console.log('I got ' + data.body.tracks.total + ' results!');
+
+		  // Go through the first page of results
+		  var firstPage = data.body.tracks.items;
+		  console.log('The tracks in the first page are.. (popularity in parentheses)');
+
+		  /*
+		   * 0: All of Me (97)
+		   * 1: My Love (91)
+		   * 2: I Love This Life (78)
+		   * ...
+		   */
+		  firstPage.forEach(function(track, index) {
+		    console.log(index + ': ' + track.name + ' (' + track.popularity + ')');
+		  });
+		});
 	console.log("hi");
 });
 
