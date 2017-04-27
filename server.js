@@ -4,14 +4,22 @@ var request = require('request'); // "Request" library
 var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var SpotifyWebApi = require('spotify-web-api-node');
 var fs = require('fs');
 var app = express();
+var spotifyApi = new SpotifyWebApi({
+	clientId : '67fd18a6482b41a5aa0c8b71b1517989',
+	clientSecret : '7a42b826ed224ed0a94634b2d12152b6',
+	redirectUri : 'https://audiowned.herokuapp.com/callback'
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+/*
 var client_id = '67fd18a6482b41a5aa0c8b71b1517989'; // Your client id
 var client_secret = '7a42b826ed224ed0a94634b2d12152b6'; // Your secret
 var redirect_uri = 'https://audiowned.herokuapp.com/callback'; // local: 'http://localhost:8888/callback'
+*/
 /**
  * Generates a random string containing numbers and letters
  * @param  {number} length The length of the string
@@ -115,6 +123,12 @@ app.get('/loading', function(req, res) {
 
 app.get('/matched', function(req, res) {
   console.log('enter matched');
+  spotifyApi.getArtistAlbums('43ZHCT0cAZBISjO8DG9PnE')
+  .then(function(data) {
+    console.log('Artist albums', data.body);
+  }, function(err) {
+    console.error(err);
+  });
   res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
 
