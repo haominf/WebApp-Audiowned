@@ -127,7 +127,7 @@ app.get('/game', function(req, res) {
 });
 
 app.post('/submit', function(req, res) {
-        console.log(req.body);
+        console.log(req.body.number);
 		spotifyApi.searchTracks('Love', function(err, data) {
 		  if (err) {
 		    console.error('Something went wrong', err.message);
