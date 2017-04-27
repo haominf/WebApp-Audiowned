@@ -127,7 +127,14 @@ app.get('/game', function(req, res) {
 
 
 app.post('/submit', function(req, res) {
-    console.log(req.body);
+        console.log(req.body);
+        console.log('in game');
+        res.render('game', {Name:player_name, Pic_URL:player_pic});
+});
+
+app.post('/submit', function(req, res) {
+        console.log(req.body);
+>>>>>>> cb645eed168651c837d28d8ee78c081db5cfae79
 	console.log("hi");
 });
 
