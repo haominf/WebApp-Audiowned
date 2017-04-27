@@ -119,6 +119,7 @@ app.get('/matched', function(req, res) {
 });
 
 app.get('/game', function(req, res) {
+        console.log('in game');
         res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
