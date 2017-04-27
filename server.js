@@ -9,6 +9,8 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var spotify_api = "https://api.spotify.com/";
+
 var client_id = '67fd18a6482b41a5aa0c8b71b1517989'; // Your client id
 var client_secret = '7a42b826ed224ed0a94634b2d12152b6'; // Your secret
 var redirect_uri = 'https://audiowned.herokuapp.com/callback'; // local: 'http://localhost:8888/callback'
@@ -48,15 +50,15 @@ var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 });
 
 // set the home page route
-app.get('/', (req, res) => {
+app.get('/', function(req, res) {
     res.render('index');
 });
 
-app.get('/play', (req, res) => {
+app.get('/play', function(req, res) {
 	res.render('play_tracks');
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', function(req, res) {
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
     var scope = 'user-read-email';
@@ -74,23 +76,10 @@ app.post('/login', (req, res) => {
     res.send('hello');
 });
 
-app.get('/home', (req, res) => {
+app.get('/home', function(req, res) {
     res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
 
 });
-
-// var username_created;
-// app.post('/id', (req, res) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader('Access-Control-Allow-Methods', 'POST');
-//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,contenttype');
-
-//     username_created = req.body.id;
-//     console.log('created username: ' + username_created);
-//     //to be add into mongodb
-
-//     res.send(null);
-// });
 
 app.get('/login', function(req, res) {
 
@@ -110,21 +99,42 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/loading', function(req, res) {
-  res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
+    res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
 });
 
 app.get('/matched', function(req, res) {
-  console.log('enter matched');
-  res.render('matched', {Name:player_name, Pic_URL:player_pic});
+    console.log('enter matched');
+    res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
 
 app.get('/game', function(req, res) {
+    var playlist_id = '5FJXhjdILmRA2z5bvz4nzf';
+    var query = querystring.querify( { 'market': 'US', 'limit': 40 });
+    var options = {
+        url: spotify_api + 'v1/users/spotify/playlists/' + playlist_id + '/tracks?' + query,
+        headers: { 'Authorization': 'Bearer ' + access_token },
+        json: true
+    }
+    
+    request.get(options, function(error, response, body) {
+        var songs = JSON.parse(body);
+        console.log(songs);
+    });
+    
+    // startGame();
+    res.render('game', {Name:player_name, Pic_URL:player_pic});
+});
+
+
+app.post('/submit', function(req, res) {
+        console.log(req.body);
         console.log('in game');
         res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
 app.post('/submit', function(req, res) {
         console.log(req.body);
+>>>>>>> cb645eed168651c837d28d8ee78c081db5cfae79
 	console.log("hi");
 });
 
@@ -178,16 +188,6 @@ app.get('/callback', function(req, res) {
           player_pic = player_json['images'][0]['url'];
           res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
         });
-        // console.log('Tokens:');
-        // console.log('access token: ' + access_token);
-        // console.log('refresh access token: ' + refresh_token);
-        // we can also pass the token to the browser to make requests from there
-
-        // res.redirect('/#' +
-        //   querystring.stringify({
-        //     access_token: access_token,
-        //     refresh_token: refresh_token
-        //   }));
       } else {
         res.redirect('/#' +
           querystring.stringify({
@@ -197,30 +197,6 @@ app.get('/callback', function(req, res) {
     });
   }
 });
-
-// app.get('/refresh_token', function(req, res) {
-
-//   // requesting access token from refresh token
-//   var refresh_token = req.query.refresh_token;
-//   var authOptions = {
-//     url: 'https://accounts.spotify.com/api/token',
-//     headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
-//     form: {
-//       grant_type: 'refresh_token',
-//       refresh_token: refresh_token
-//     },
-//     json: true
-//   };
-
-//   request.post(authOptions, function(error, response, body) {
-//     if (!error && response.statusCode === 200) {
-//       var access_token = body.access_token;
-//       res.send({
-//         'access_token': access_token
-//       });
-//     }
-//   });
-// });
 
 app.listen(app.get('port'), function() {
     console.log('App is running on port', app.get('port'));
