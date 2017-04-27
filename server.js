@@ -9,6 +9,8 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+var spotify_api = "https://api.spotify.com/";
+
 var client_id = '67fd18a6482b41a5aa0c8b71b1517989'; // Your client id
 var client_secret = '7a42b826ed224ed0a94634b2d12152b6'; // Your secret
 var redirect_uri = 'https://audiowned.herokuapp.com/callback'; // local: 'http://localhost:8888/callback'
@@ -106,12 +108,26 @@ app.get('/matched', function(req, res) {
 });
 
 app.get('/game', function(req, res) {
+    var playlist_id = '5FJXhjdILmRA2z5bvz4nzf';
+    var query = querystring.querify( { 'market': 'US', 'limit': 40 });
+    var options = {
+        url: spotify_api + 'v1/users/spotify/playlists/' + playlist_id + '/tracks?' + query,
+        headers: { 'Authorization': 'Bearer ' + access_token },
+        json: true
+    }
+    
+    request.get(options, function(error, response, body) {
+        var songs = JSON.parse(body);
+        console.log(songs);
+    });
+    
+    // startGame();
     res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
 
-app.post('/submit', function(req, res) => {
-        console.log(req.body);
+app.post('/submit', function(req, res) {
+    console.log(req.body);
 	console.log("hi");
 });
 
