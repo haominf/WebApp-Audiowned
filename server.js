@@ -112,13 +112,12 @@ app.get('/matched', function(req, res) {
 			  res.send(result);
 		  }
 	  });
-  })
   res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
 
 app.post('/game', function(req, res) {
 
-		res.render('game', {Name:player_name, Pic_URL:player_pic});
+		res.render('game');
 
 });
 
@@ -128,8 +127,8 @@ app.post('/submit', function(req, res) {
 
 	if (req.body.round == 1) {
 		var info = {
-			"username": req.body.username;
-			"pic": req.body.pic;
+			"username": player_name;
+			"pic": player_pic;
 			"scores": [req.body.score];
 		}
 		db.collection('users', function (error, coll) {
@@ -148,9 +147,6 @@ app.post('/submit', function(req, res) {
 	console.log("post");
     console.log(req.body.number);
 	console.log("hi");
-
-    console.log('enter matched');
-    res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
 
 app.get('/game', function(req, res) {
