@@ -116,6 +116,7 @@ app.get('/matched', function(req, res) {
   res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
 
+
 app.post('/game', function(req, res) {
 
 		res.render('game', {Name:player_name, Pic_URL:player_pic});
@@ -155,6 +156,9 @@ app.post('/submit', function(req, res) {
 
 app.get('/game', function(req, res) {
     // THIS DOESN'T WORK YET !
+
+app.get('/game', function(req, res) {
+
     var playlist_id = '5FJXhjdILmRA2z5bvz4nzf';
     var query = querystring.querify( { 'market': 'US', 'limit': 40 });
     var options = {
@@ -180,6 +184,15 @@ app.post('/submit', function(req, res) {
 
 app.post('/submit', function(req, res) {
     console.log(req.body);
+
+        console.log('in game');
+		res.render('game', {Name:player_name, Pic_URL:player_pic});
+
+});
+
+app.post('/submit', function(req, res) {
+    console.log(req.body.number);
+	console.log("hi");
 });
 
 app.get('/callback', function(req, res) {
