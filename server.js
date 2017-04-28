@@ -20,12 +20,16 @@ app.use('/static', express.static('public')).use(cookieParser());
 
 // mongo things
 var mongoUri = process.env.MONGODB_URI || process.env.MONGOLAB_URI ||
-    process.env.MONGOHQ_URL || 'mongodb://localhost/';
-var MongoClient = require('mongodb').MongoClient;
-var format = require('util').format;
+        process.env.MONGOHQ_URL || 'mongodb://127.0.0.1:27017/users';
+var MongoClient = require('mongodb').MongoClient, format = require('util').format;
 var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
-    db = databaseConnection;
+        if (error) {
+                console.log("fuck");
+        }
+        db = databaseConnection;
+
 });
+
 
 // spotify things
 var spotify_api = "https://api.spotify.com/";
@@ -102,18 +106,24 @@ app.get('/loading', function(req, res) {
 });
 
 app.get('/matched', function(req, res) {
-  console.log('enter matched');
-  db.collection.find().sort({time:-1}).limit(1).toArray(
-	  function (error, result) {
-		  if (error) {
-			  res.send(500);
-		  }
-		  else {
-			  res.send(result);
-		  }
-	  });
-  res.render('matched', {Name:player_name, Pic_URL:player_pic});
+        getUser(req, res);
+        console.log('enter matched');
 });
+
+function getUser(req, res) {
+        // db.collection('user', function(error, collection) {
+        //         collection.find().toArray(function (error, result) {
+        //                           if (error) {
+        //                                   res.send(500);
+        //                           }
+        //                           else {
+        //                                   res.send(result);
+        //                           }
+        //                 });
+                res.render('matched', {Name:player_name, Pic_URL:player_pic});
+        // });
+
+}
 
 app.post('/game', function(req, res) {
 
@@ -122,14 +132,14 @@ app.post('/game', function(req, res) {
 });
 
 app.post('/submit', function(req, res) {
-	response.header("Access-Control-Allow-Origin", "*");
-	response.header("Access-Control-Allow-Headers", "X-Requested-With");
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
 	if (req.body.round == 1) {
 		var info = {
 			"username": player_name,
 			"pic": player_pic,
-			"scores": [req.body.score]
+			"scores": req.body.score
 		};
 		db.collection('users', function (error, coll) {
 			coll.insert(info, function(error) {
@@ -145,7 +155,7 @@ app.post('/submit', function(req, res) {
 	}
 
 	console.log("post");
-    console.log(req.body.number);
+        console.log(req.body.number);
 	console.log("hi");
 });
 
@@ -166,14 +176,6 @@ app.get('/game', function(req, res) {
 
     // startGame();
     res.render('game', {Name:player_name, Pic_URL:player_pic});
-});
-
-app.post('/submit', function(req, res) {
-    console.log(req.body);
-    console.log("helllloooo");
-
-    // console.log('in game');
-    // res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
 });
 
 
