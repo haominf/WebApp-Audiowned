@@ -82,17 +82,17 @@ app.get('/home', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-var state = generateRandomString(16);
-      res.cookie(stateKey, state);
-      // app requests authorization
-      var scope = 'user-read-private user-read-email';
-      res.redirect('https://accounts.spotify.com/authorize?' +
-querystring.stringify({
-          response_type: 'code',
-          client_id: client_id,
-          scope: scope,
-          redirect_uri: redirect_uri,
-          state: state
+    var state = generateRandomString(16);
+    res.cookie(stateKey, state);
+    // app requests authorization
+    var scope = 'user-read-private user-read-email';
+    res.redirect('https://accounts.spotify.com/authorize?' +
+        querystring.stringify({
+            response_type: 'code',
+            client_id: client_id,
+            scope: scope,
+            redirect_uri: redirect_uri,
+            state: state
         }));
 });
 
@@ -106,6 +106,7 @@ app.get('/matched', function(req, res) {
 });
 
 app.get('/game', function(req, res) {
+    // THIS DOESN'T WORK YET !
     var playlist_id = '5FJXhjdILmRA2z5bvz4nzf';
     var query = querystring.querify( { 'market': 'US', 'limit': 40 });
     var options = {
@@ -122,7 +123,6 @@ app.get('/game', function(req, res) {
     // startGame();
     res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
-
 
 app.post('/submit', function(req, res) {
     console.log(req.body);
@@ -192,7 +192,7 @@ app.get('/callback', function(req, res) {
 });
 
 app.get('/refresh_token', function(req, res) {
-// requesting access token from refresh token
+    // requesting access token from refresh token
     var refresh_token = req.query.refresh_token;
     var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
