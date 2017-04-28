@@ -108,18 +108,18 @@ app.get('/matched', function(req, res) {
 
 app.get('/game', function(req, res) {
     // THIS DOESN'T WORK YET !
-    var playlist_id = '5FJXhjdILmRA2z5bvz4nzf';
-    var query = querystring.querify( { 'market': 'US', 'limit': 40 });
-    var options = {
-        url: spotify_api + 'v1/users/spotify/playlists/' + playlist_id + '/tracks?' + query,
-        headers: { 'Authorization': 'Bearer ' + access_token },
-        json: true
-    }
-
-    request.get(options, function(error, response, body) {
-        var songs = JSON.parse(body);
-        console.log(songs);
-    });
+    // var playlist_id = '5FJXhjdILmRA2z5bvz4nzf';
+    // var query = querystring.querify( { 'market': 'US', 'limit': 40 });
+    // var options = {
+    //     url: spotify_api + 'v1/users/spotify/playlists/' + playlist_id + '/tracks?' + query,
+    //     headers: { 'Authorization': 'Bearer ' + access_token },
+    //     json: true
+    // }
+    //
+    // request.get(options, function(error, response, body) {
+    //     var songs = JSON.parse(body);
+    //     console.log(songs);
+    // });
 
     // startGame();
     res.render('game', {Name:player_name, Pic_URL:player_pic});
@@ -127,21 +127,17 @@ app.get('/game', function(req, res) {
 
 app.post('/submit', function(req, res) {
     console.log(req.body);
-    console.log('in game');
-    res.render('game', {Name:player_name, Pic_URL:player_pic});
+    console.log("helllloooo");
+    renderGamePage(req, res);
+    // console.log('in game');
+    // res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
 });
 
-app.post('/submit', function(req, res) {
-    console.log(req.body);
-        console.log('in game');
-		res.render('game', {Name:player_name, Pic_URL:player_pic});
+function renderGamePage(req, res) {
+        console.log("hello");
+        res.render('matched', {Name:player_name, Pic_URL:player_pic});
+}
 
-});
-
-app.post('/submit', function(req, res) {
-    console.log(req.body.number);
-	console.log("hi");
-});
 
 app.get('/callback', function(req, res) {
     // your application requests refresh and access tokens
