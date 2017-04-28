@@ -127,10 +127,10 @@ app.post('/submit', function(req, res) {
 
 	if (req.body.round == 1) {
 		var info = {
-			"username": player_name;
-			"pic": player_pic;
-			"scores": [req.body.score];
-		}
+			"username": player_name,
+			"pic": player_pic,
+			"scores": [req.body.score]
+		};
 		db.collection('users', function (error, coll) {
 			coll.insert(info, function(error) {
 				if (error) {
