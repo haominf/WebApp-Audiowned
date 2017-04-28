@@ -17,7 +17,9 @@
        <script src="static/js/bootstrap.min.js"></script>
        <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.6.1/dist/progressbar.js"></script>
        <script>
+                var date;
                 $(document).ready(function(){
+                       date = new Date();
                        var bar = new ProgressBar.Line(progress, {
                                strokeWidth: 4,
                                duration: 30000,
@@ -36,45 +38,46 @@
                });
 
                function sendChoice(num) {
-                        var url = "https://www.audiowned.herokuapp.com/submit";
-                        console.log(num);
-                        var req = new XMLHttpRequest();
-                        req.open("POST", url, true);
-                        req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-						num = "number=" + num;
-						req.send(num);
+                       var currTime = new Date();
+                       var time = currTime.getSeconds() - date.getSeconds();
+                       console.log(time);
                        $.ajax({
                                 type: "POST",
-                                url: "audiowned.herokuapp.com/submit",
-                                data: { data1: num},
+                                url: "/submit",
+                                data: {
+                                        "choice": num,
+                                        "score": "hi",
+                                },
                                 // contentType: "application/json; charset=utf-8",
                                 dataType: "json",
-                                success: OnSuccess,
-                                failure: function(response) {
-                                    alert(response.d);
+                                statusCode: {
+                                        200: function(){
+                                                console.log(time);
+                                                // window.location.href="matched";
+                                        }
+                                },
+                                error: function() {
+                                        console.log("error");
                                 }
+
                         });
-                        // var url = "https://www.audiowned.herokuapp.com/submit";
-                        // console.log(num);
-                        // var req = new XMLHttpRequest();
-                        // req.open("POST", url, true);
-                        // // req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                        // req.send(num);
-               //
+
                 };
 
 
                 setTimeout(function(){
                        $("#gamePage").addClass('animated slideOutRight');
                         setTimeout(function(){
-                                window.location.href="/index";
+                                // window.location.href='index';
                         }, 800);
                 }, 30000);
 
        </script>
+
 </head>
 
 <body>
+
         <div id="gamePage">
         <!-- <audio autoplay loop>
             <source src="bgmusic.mp3" type="audio/mpeg">
@@ -118,7 +121,7 @@
 
         <div id="buttons">
                 <div>
-                     <button class="button" onclick='sendChoice("1")' > song 1</button>
+                     <button class="button" onclick="sendChoice('1')" > song 1</button>
                 </div>
                 <div>
                     <button class="button" onclick="sendChoice('2')" > song 2 </button>

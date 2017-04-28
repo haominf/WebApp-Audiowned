@@ -42,8 +42,18 @@
                                 data: { data1: num},
                                 // contentType: "application/json; charset=utf-8",
                                 dataType: "json",
-                                success: function() {
+                                success: function(){
                                         console.log("success");
+                                },
+                                statusCode: {
+                                        console.log("before 200");
+                                        200: function(){
+                                                console.log("hledkjalkd");
+                                                window.location.href="/index";
+                                        }
+                                },
+                                error: function() {
+                                        console.log("error");
                                 }
 
                         });
@@ -57,12 +67,12 @@
                 };
 
 
-                // setTimeout(function(){
-                //        $("#gamePage").addClass('animated slideOutRight');
-                //         setTimeout(function(){
-                //                 window.location.href="/index";
-                //         }, 800);
-                // }, 30000);
+                setTimeout(function(){
+                       $("#gamePage").addClass('animated slideOutRight');
+                        setTimeout(function(){
+                                window.location.href="/index";
+                        }, 800);
+                }, 30000);
 
        </script>
 </head>
