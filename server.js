@@ -32,6 +32,7 @@ var spotify_api = "https://api.spotify.com/";
 var client_id = '67fd18a6482b41a5aa0c8b71b1517989'; // Your client id
 var client_secret = '7a42b826ed224ed0a94634b2d12152b6'; // Your secret
 var redirect_uri = 'http://localhost:' + app.get('port') + '/callback' || 'https://audiowned.herokuapp.com/callback';
+var auth_code, refresh_token;
 
 /**
  * Generates a random string containing numbers and letters
@@ -63,7 +64,6 @@ app.post('/login', function(req, res) {
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
     var scope = 'user-read-email';
-    console.log('logging in');
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
@@ -106,21 +106,52 @@ app.get('/matched', function(req, res) {
 });
 
 app.get('/game', function(req, res) {
-    // THIS DOESN'T WORK YET !
-    var playlist_id = '5FJXhjdILmRA2z5bvz4nzf';
-    var query = querystring.querify( { 'market': 'US', 'limit': 40 });
-    var options = {
-        url: spotify_api + 'v1/users/spotify/playlists/' + playlist_id + '/tracks?' + query,
-        headers: { 'Authorization': 'Bearer ' + access_token },
+    var authOptions = {
+        url: 'https://accounts.spotify.com/api/token',
+        headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
+            form: {
+                grant_type: 'refresh_token',
+                refresh_token: refresh_token
+            },
         json: true
-    }
+    };
     
-    request.get(options, function(error, response, body) {
-        var songs = JSON.parse(body);
-        console.log(songs);
+    // every time we get things from spotify api, refresh token & get access token
+    request.post(authOptions, (err, response, body) => {
+        if (!err && response.statusCode == 200) {
+            var access_token = body.access_token;
+            refresh_token = body.refresh_token;
+            
+            // always get Spotify's Today's Top Hits playlist lol
+            var playlist_id = '5FJXhjdILmRA2z5bvz4nzf';
+            var query = querystring.stringify( { 'market': 'US', 'limit': 40 });
+            var options = {
+                url: spotify_api + 'v1/users/spotify/playlists/' + playlist_id + '/tracks?' + query,
+                headers: { 'Authorization': 'Bearer ' + access_token },
+                json: true
+            }
+            
+            // use the access token to access the Spotify Web API
+            request.get(options, function(error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var tracks = body.items;
+                    var music = new Object();
+                    for (var i = 0; i < tracks.length; i++) {
+                        music[i] = {
+                            'name':tracks[i].track.name,
+                            'artist':tracks[i].track.artists[0].name,
+                            'id':tracks[i].track.id
+                        };
+                    }
+                    console.log(music);
+                }
+                else {
+                    console.log('u fuked up');
+                }
+            });
+        }
     });
-    
-    // startGame();
+
     res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
@@ -130,14 +161,12 @@ app.post('/submit', function(req, res) {
     res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
-app.post('/submit', function(req, res) {
-    console.log(req.body);
-});
-
 app.get('/callback', function(req, res) {
     // your application requests refresh and access tokens
     // after checking the state parameter
     var code = req.query.code || null;
+    auth_code = code;
+    console.log(auth_code);
     var state = req.query.state || null;
     var storedState = req.cookies ? req.cookies[stateKey] : null;
 
@@ -164,8 +193,8 @@ app.get('/callback', function(req, res) {
         // send request to spotify 
         request.post(authOptions, function(error, response, body) {
             if (!error && response.statusCode === 200) {
-                var access_token = body.access_token,
-                    refresh_token = body.refresh_token;
+                var access_token = body.access_token;
+                refresh_token = body.refresh_token;
                 var options = {
                     url: 'https://api.spotify.com/v1/me',
                     headers: { 'Authorization': 'Bearer ' + access_token },
@@ -173,14 +202,13 @@ app.get('/callback', function(req, res) {
                 };
                 // use the access token to access the Spotify Web API
                 request.get(options, function(error, response, body) {
-                    console.log('this is the json body:');
                     console.log(body);
                     player_json = body;
                     player_name = player_json['display_name'];
                     player_pic = player_json['images'][0]['url'];
                     res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
                 });
-            } 
+            }
             else {
                 res.redirect('/#' +
                 querystring.stringify({
@@ -193,7 +221,7 @@ app.get('/callback', function(req, res) {
 
 app.get('/refresh_token', function(req, res) {
     // requesting access token from refresh token
-    var refresh_token = req.query.refresh_token;
+    refresh_token = req.query.refresh_token;
     var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
         headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
