@@ -101,6 +101,54 @@ app.get('/loading', function(req, res) {
 });
 
 app.get('/matched', function(req, res) {
+
+  console.log('enter matched');
+  db.collection.find().sort({time:-1}).limit(1).toArray(
+	  function (error, result) {
+		  if (error) {
+			  res.send(500);
+		  }
+		  else {
+			  res.send(result);
+		  }
+	  });
+  })
+  res.render('matched', {Name:player_name, Pic_URL:player_pic});
+});
+
+app.post('/game', function(req, res) {
+
+		res.render('game', {Name:player_name, Pic_URL:player_pic});
+
+});
+
+app.post('/submit', function(req, res) {
+	response.header("Access-Control-Allow-Origin", "*");
+	response.header("Access-Control-Allow-Headers", "X-Requested-With");
+
+	if (req.body.round == 1) {
+		var info = {
+			"username": req.body.username;
+			"pic": req.body.pic;
+			"scores": [req.body.score];
+		}
+		db.collection('users', function (error, coll) {
+			coll.insert(info, function(error) {
+				if (error) {
+					res.send(500);
+					return;
+				}
+			});
+		});
+	}
+	else {
+		db.users.update({username: req.body.username}, {$push: {scores: req.body.score}});
+	}
+
+	console.log("post");
+    console.log(req.body.number);
+	console.log("hi");
+
     console.log('enter matched');
     res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
@@ -151,7 +199,7 @@ app.get('/game', function(req, res) {
             });
         }
     });
-
+    // startGame();
     res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
@@ -175,7 +223,7 @@ app.get('/callback', function(req, res) {
             querystring.stringify({
                 error: 'state_mismatch'
         }));
-    } 
+    }
     else {
         res.clearCookie(stateKey);
         var authOptions = {
@@ -190,7 +238,7 @@ app.get('/callback', function(req, res) {
             },
             json: true
         };
-        // send request to spotify 
+        // send request to spotify
         request.post(authOptions, function(error, response, body) {
             if (!error && response.statusCode === 200) {
                 var access_token = body.access_token;
