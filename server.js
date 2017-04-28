@@ -71,8 +71,8 @@ app.post('/login', function(req, res) {
             scope: scope,
             redirect_uri: redirect_uri,
             state: state
-        }
-    ));
+        })
+    );
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.send('hello');
 });
@@ -101,25 +101,22 @@ app.get('/loading', function(req, res) {
 });
 
 app.get('/matched', function(req, res) {
-
-  console.log('enter matched');
-  db.collection.find().sort({time:-1}).limit(1).toArray(
-	  function (error, result) {
-		  if (error) {
-			  res.send(500);
-		  }
-		  else {
-			  res.send(result);
-		  }
-	  });
-  })
-  res.render('matched', {Name:player_name, Pic_URL:player_pic});
+    /*
+    db.collection.find().sort({time:-1}).limit(1).toArray(
+        function (error, result) {
+        if (error) {
+            res.send(500);
+        }
+        else {
+            res.send(result);
+        }
+    });
+    */
+    res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
 
 app.post('/game', function(req, res) {
-
-		res.render('game', {Name:player_name, Pic_URL:player_pic});
-
+	res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
 app.post('/submit', function(req, res) {
@@ -128,10 +125,11 @@ app.post('/submit', function(req, res) {
 
 	if (req.body.round == 1) {
 		var info = {
-			"username": req.body.username;
-			"pic": req.body.pic;
-			"scores": [req.body.score];
+			"username": req.body.username,
+			"pic": req.body.pic,
+			"scores": [req.body.score]
 		}
+        /*
 		db.collection('users', function (error, coll) {
 			coll.insert(info, function(error) {
 				if (error) {
@@ -140,16 +138,17 @@ app.post('/submit', function(req, res) {
 				}
 			});
 		});
+        */
 	}
 	else {
-		db.users.update({username: req.body.username}, {$push: {scores: req.body.score}});
+		// db.users.update({username: req.body.username}, {$push: {scores: req.body.score}});
 	}
 
-	console.log("post");
+	// console.log("post");
     console.log(req.body.number);
-	console.log("hi");
+	// console.log("hi");
 
-    console.log('enter matched');
+    // console.log('enter matched');
     res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
 
@@ -183,15 +182,16 @@ app.get('/game', function(req, res) {
             request.get(options, function(error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var tracks = body.items;
-                    var music = new Object();
+                    music = new Array();
                     for (var i = 0; i < tracks.length; i++) {
                         music[i] = {
                             'name':tracks[i].track.name,
                             'artist':tracks[i].track.artists[0].name,
-                            'id':tracks[i].track.id
+                            'id':tracks[i].track.id,
+                            'url':tracks[i].track.preview_url
                         };
                     }
-                    console.log(music);
+                    res.render('game', {MUSIC: music, Name:player_name, Pic_URL:player_pic});
                 }
                 else {
                     console.log('u fuked up');
@@ -199,13 +199,11 @@ app.get('/game', function(req, res) {
             });
         }
     });
-    // startGame();
-    res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
 app.post('/submit', function(req, res) {
-    console.log(req.body);
-    console.log('in game');
+    // console.log(req.body);
+    // console.log('in game');
     res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
@@ -214,7 +212,6 @@ app.get('/callback', function(req, res) {
     // after checking the state parameter
     var code = req.query.code || null;
     auth_code = code;
-    console.log(auth_code);
     var state = req.query.state || null;
     var storedState = req.cookies ? req.cookies[stateKey] : null;
 
@@ -250,7 +247,6 @@ app.get('/callback', function(req, res) {
                 };
                 // use the access token to access the Spotify Web API
                 request.get(options, function(error, response, body) {
-                    console.log(body);
                     player_json = body;
                     player_name = player_json['display_name'];
                     player_pic = player_json['images'][0]['url'];

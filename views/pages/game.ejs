@@ -62,20 +62,38 @@
                         // req.send(num);
                //
                 };
+                // function playmusic() {
+                //     //for (var i = 0; i < 10; i++) {
+                //         console.log(<%= MUSIC[0].url %>);
+                //         var player = new Audio(<%= MUSIC[0].url %>);
+                //         player.autoplay = true;
+                //     //}
+                //     setTimeout(function() { }, 100000);
+                // }
 
+                function htmlDecode(input){
+                    var e = document.createElement('div');
+                    e.innerHTML = input;
+                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+                }
+                var myVar = JSON.parse(htmlDecode("<%= JSON.stringify(MUSIC[0]) %>"));
+                console.log(myVar);
 
+                /*
                 setTimeout(function(){
                        $("#gamePage").addClass('animated slideOutRight');
                         setTimeout(function(){
-                                window.location.href="/index";
+                                for (int i = 0; i < lengthwindow.location.href="/index";
                         }, 800);
                 }, 30000);
-
+                */
        </script>
 </head>
 
-<body>
+<body onload="htmlDecode()">
+<!-- <body onload="playmusic()"> -->
         <div id="gamePage">
+            <source src="bgmusic.mp3" type="audio/mpeg">
         <!-- <audio autoplay loop>
             <source src="bgmusic.mp3" type="audio/mpeg">
         </audio>
@@ -83,38 +101,22 @@
             <source src="bgmusic.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio> -->
-
         <header>
-		<h1 id="loadheader">ROUND 3</h1>
+		          <h1 id="loadheader">ROUND 3</h1>
         </header>
-
         <div id="pics">
-
                 <div id="userpic">
-
-                        <img src="https://scontent.fluk1-1.fna.fbcdn.net/v/t31.0-8/16707354_1270731589629046_5534878168568381697_o.jpg?oh=51f6c7e662abb9b9ad3e9d619ab21f88&oe=59556726" alt="l8k8" width=150px>
+                    <img src="https://scontent.fluk1-1.fna.fbcdn.net/v/t31.0-8/16707354_1270731589629046_5534878168568381697_o.jpg?oh=51f6c7e662abb9b9ad3e9d619ab21f88&oe=59556726" alt="l8k8" width=150px>
                 </div>
-
-
                 <div id="progress"></div>
-
-
                 <div id="opppic">
-
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="placeholder" width=150px>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="placeholder" width="150px">
                 </div>
-
-
-
-
         </div>
         <div id="scores">
                 <h3 id="ownScore">SCORE: <ownScore> </h3>
-
                 <h3 id="oppScore">SCORE: <oppScore> </h3>
         </div>
-
-
 
         <div id="buttons">
                 <div>
