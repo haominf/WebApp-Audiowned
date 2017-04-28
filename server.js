@@ -128,15 +128,12 @@ app.get('/game', function(req, res) {
 app.post('/submit', function(req, res) {
     console.log(req.body);
     console.log("helllloooo");
-    renderGamePage(req, res);
+
     // console.log('in game');
     // res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
 });
 
-function renderGamePage(req, res) {
-        console.log("hello");
-        res.render('matched', {Name:player_name, Pic_URL:player_pic});
-}
+
 
 
 app.get('/callback', function(req, res) {
