@@ -82,12 +82,12 @@ app.get('/home', function(req, res) {
 });
 
 app.get('/login', function(req, res) {
-      var state = generateRandomString(16);
+var state = generateRandomString(16);
       res.cookie(stateKey, state);
       // app requests authorization
       var scope = 'user-read-private user-read-email';
       res.redirect('https://accounts.spotify.com/authorize?' +
-        querystring.stringify({
+querystring.stringify({
           response_type: 'code',
           client_id: client_id,
           scope: scope,
