@@ -9,6 +9,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+<<<<<<< HEAD
 // set port number
 app.set('port', (process.env.PORT || 8888));
 // set the view engine to ejs
@@ -29,6 +30,9 @@ var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 
 // spotify things
 var spotify_api = "https://api.spotify.com/";
+=======
+
+>>>>>>> a39408007aec3f6777c2da7bbee9bb563a4ccd46
 var client_id = '67fd18a6482b41a5aa0c8b71b1517989'; // Your client id
 var client_secret = '7a42b826ed224ed0a94634b2d12152b6'; // Your secret
 var redirect_uri = 'https://audiowned.herokuapp.com/callback' || 'http://localhost:' + app.get('port') + '/callback';
@@ -106,6 +110,7 @@ app.get('/matched', function(req, res) {
 });
 
 app.get('/game', function(req, res) {
+<<<<<<< HEAD
     var playlist_id = '5FJXhjdILmRA2z5bvz4nzf';
     var query = querystring.querify( { 'market': 'US', 'limit': 40 });
     var options = {
@@ -132,6 +137,16 @@ app.post('/submit', function(req, res) {
 
 app.post('/submit', function(req, res) {
     console.log(req.body);
+=======
+        console.log('in game');
+		res.render('game', {Name:player_name, Pic_URL:player_pic});
+
+});
+
+app.post('/submit', function(req, res) {
+    console.log(req.body.number);
+	console.log("hi");
+>>>>>>> a39408007aec3f6777c2da7bbee9bb563a4ccd46
 });
 
 app.get('/callback', function(req, res) {
