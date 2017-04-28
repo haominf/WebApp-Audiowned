@@ -120,16 +120,16 @@ app.post('/game', function(req, res) {
 });
 
 app.post('/submit', function(req, res) {
-    response.header("Access-Control-Allow-Origin", "*");
-    response.header("Access-Control-Allow-Headers", "X-Requested-With");
-
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.sendStatus(200);
     // if (req.body.round == 1) {
     //     var info = {
     //         "username": req.body.username,
     //         "pic": req.body.pic,
     //         "scores": [req.body.score]
     //     }
-        
+
     //     db.collection('users', function (error, coll) {
     //         coll.insert(info, function(error) {
     //             if (error) {
@@ -138,13 +138,13 @@ app.post('/submit', function(req, res) {
     //             }
     //         });
     //     });
-        
+
     // }
     // else {
     //     // db.users.update({username: req.body.username}, {$push: {scores: req.body.score}});
     // }
 
-    // // console.log("post");
+    console.log("post");
     // console.log(req.body.number);
     // console.log("hi");
 
@@ -162,13 +162,13 @@ app.get('/game', function(req, res) {
             },
         json: true
     };
-    
+
     // every time we get things from spotify api, refresh token & get access token
     request.post(authOptions, (err, response, body) => {
         if (!err && response.statusCode == 200) {
             var access_token = body.access_token;
             refresh_token = body.refresh_token;
-            
+
             // always get Spotify's Today's Top Hits playlist lol
             var playlist_id = '5FJXhjdILmRA2z5bvz4nzf';
             var query = querystring.stringify( { 'market': 'US', 'limit': 40 });
@@ -177,7 +177,7 @@ app.get('/game', function(req, res) {
                 headers: { 'Authorization': 'Bearer ' + access_token },
                 json: true
             }
-            
+
             // use the access token to access the Spotify Web API
             request.get(options, function(error, response, body) {
                 if (!error && response.statusCode == 200) {
