@@ -20,19 +20,23 @@ app.use('/static', express.static('public')).use(cookieParser());
 
 // mongo things
 var mongoUri = process.env.MONGODB_URI || process.env.MONGOLAB_URI ||
-    process.env.MONGOHQ_URL || 'mongodb://localhost/';
-var MongoClient = require('mongodb').MongoClient;
-var format = require('util').format;
+        process.env.MONGOHQ_URL || 'mongodb://127.0.0.1:27017/users';
+var MongoClient = require('mongodb').MongoClient, format = require('util').format;
 var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
-    db = databaseConnection;
+        if (error) {
+                console.log("fuck");
+        }
+        db = databaseConnection;
+
 });
+
 
 // spotify things
 var spotify_api = "https://api.spotify.com/";
+
 var client_id = '67fd18a6482b41a5aa0c8b71b1517989'; // Your client id
 var client_secret = '7a42b826ed224ed0a94634b2d12152b6'; // Your secret
 var redirect_uri = 'http://localhost:' + app.get('port') + '/callback' || 'https://audiowned.herokuapp.com/callback';
-var auth_code, refresh_token;
 
 /**
  * Generates a random string containing numbers and letters
@@ -64,6 +68,7 @@ app.post('/login', function(req, res) {
     var state = generateRandomString(16);
     res.cookie(stateKey, state);
     var scope = 'user-read-email';
+    console.log('logging in');
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
@@ -101,6 +106,7 @@ app.get('/loading', function(req, res) {
 });
 
 app.get('/matched', function(req, res) {
+<<<<<<< HEAD
     /*
     db.collection.find().sort({time:-1}).limit(1).toArray(
         function (error, result) {
@@ -113,15 +119,32 @@ app.get('/matched', function(req, res) {
     });
     */
     res.render('matched', {Name:player_name, Pic_URL:player_pic});
+    getUser(req, res);
+    console.log('enter matched');
 });
+
+function getUser(req, res) {
+        // db.collection('user', function(error, collection) {
+        //         collection.find().toArray(function (error, result) {
+        //                           if (error) {
+        //                                   res.send(500);
+        //                           }
+        //                           else {
+        //                                   res.send(result);
+        //                           }
+        //                 });
+                res.render('matched', {Name:player_name, Pic_URL:player_pic});
+        // });
+
+}
 
 app.post('/game', function(req, res) {
 	res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
 app.post('/submit', function(req, res) {
-	response.header("Access-Control-Allow-Origin", "*");
-	response.header("Access-Control-Allow-Headers", "X-Requested-With");
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
 	if (req.body.round == 1) {
 		var info = {
@@ -130,6 +153,10 @@ app.post('/submit', function(req, res) {
 			"scores": [req.body.score]
 		}
         /*
+			"username": player_name,
+			"pic": player_pic,
+			"scores": req.body.score
+		};
 		db.collection('users', function (error, coll) {
 			coll.insert(info, function(error) {
 				if (error) {
@@ -143,12 +170,7 @@ app.post('/submit', function(req, res) {
 	else {
 		// db.users.update({username: req.body.username}, {$push: {scores: req.body.score}});
 	}
-
-	// console.log("post");
     console.log(req.body.number);
-	// console.log("hi");
-
-    // console.log('enter matched');
     res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
 
@@ -207,6 +229,25 @@ app.post('/submit', function(req, res) {
     res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
+app.get('/game', function(req, res) {
+    // THIS DOESN'T WORK YET !
+    // var playlist_id = '5FJXhjdILmRA2z5bvz4nzf';
+    // var query = querystring.querify( { 'market': 'US', 'limit': 40 });
+    // var options = {
+    //     url: spotify_api + 'v1/users/spotify/playlists/' + playlist_id + '/tracks?' + query,
+    //     headers: { 'Authorization': 'Bearer ' + access_token },
+    //     json: true
+    // }
+    //
+    // request.get(options, function(error, response, body) {
+    //     var songs = JSON.parse(body);
+    //     console.log(songs);
+    // });
+
+    // startGame();
+    res.render('game', {Name:player_name, Pic_URL:player_pic});
+});
+
 app.get('/callback', function(req, res) {
     // your application requests refresh and access tokens
     // after checking the state parameter
@@ -238,8 +279,8 @@ app.get('/callback', function(req, res) {
         // send request to spotify
         request.post(authOptions, function(error, response, body) {
             if (!error && response.statusCode === 200) {
-                var access_token = body.access_token;
-                refresh_token = body.refresh_token;
+                var access_token = body.access_token,
+                    refresh_token = body.refresh_token;
                 var options = {
                     url: 'https://api.spotify.com/v1/me',
                     headers: { 'Authorization': 'Bearer ' + access_token },
@@ -265,7 +306,7 @@ app.get('/callback', function(req, res) {
 
 app.get('/refresh_token', function(req, res) {
     // requesting access token from refresh token
-    refresh_token = req.query.refresh_token;
+    var refresh_token = req.query.refresh_token;
     var authOptions = {
         url: 'https://accounts.spotify.com/api/token',
         headers: { 'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64')) },
