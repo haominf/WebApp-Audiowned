@@ -34,10 +34,8 @@
                                bar.path.setAttribute('stroke', state.color);
                                }
                        });
-
                        bar.animate(1.0);
                });
-
                function sendChoice(num) {
                        var currTime = new Date();
                        var time = currTime.getSeconds() - date.getSeconds();
@@ -66,11 +64,8 @@
                                         player.pause();
                                         playmusic(counter);
                                 }
-
                         });
-
                 };
-
                 function playmusic() {
                     console.log("music music music");
                     var myVar = JSON.parse(htmlDecode("<%= JSON.stringify(MUSIC) %>"));
@@ -79,14 +74,12 @@
                         player = new Audio(myVar[counter].url);
                         player.autoplay = true;
                 }
-
                 function htmlDecode(input){
                     var e = document.createElement('div');
                     e.innerHTML = input;
                     return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
                 }
                 
-
                 /*
                 setTimeout(function(){
                        $("#gamePage").addClass('animated slideOutRight');
@@ -112,7 +105,7 @@
             Your browser does not support the audio element.
         </audio> -->
         <header>
-		          <h1 id="loadheader">ROUND 3</h1>
+              <h1 id="loadheader">ROUND 3</h1>
         </header>
         <div id="pics">
                 <div id="userpic">
