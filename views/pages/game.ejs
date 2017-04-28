@@ -36,6 +36,7 @@
                });
 
                function sendChoice(num) {
+<<<<<<< HEAD
                         var url = "https://www.audiowned.herokuapp.com/submit";
                         console.log(num);
                         var req = new XMLHttpRequest();
@@ -43,6 +44,25 @@
                         req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 						num = "number=" + num;
 						req.send(num);
+=======
+                       $.ajax({
+                                type: "POST",
+                                url: "audiowned.herokuapp.com/submit",
+                                data: { data1: num},
+                                // contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: OnSuccess,
+                                failure: function(response) {
+                                    alert(response.d);
+                                }
+                        });
+                        // var url = "https://www.audiowned.herokuapp.com/submit";
+                        // console.log(num);
+                        // var req = new XMLHttpRequest();
+                        // req.open("POST", url, true);
+                        // // req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        // req.send(num);
+>>>>>>> 168d1494b3ddb8eadd0cfcd595c67081477d902e
                //
                 };
 
