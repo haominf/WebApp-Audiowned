@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // set port number
-app.set('port', (/*8888 ||*/ process.env.PORT || 8888));
+app.set('port', (/*8888 ||*/ process.env.PORT || 5000));
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 // make express look in the views/pages directory for assets (css/js/img)
