@@ -18,7 +18,11 @@
        <script>
        setTimeout(function(){
         //        console.log("game");
-               window.location.href='/game';
+                $('body').addClass('animated slideOutRight');
+                 setTimeout(function(){
+                         window.location.href='/game';
+                 }, 800);
+        //        window.location.href='/game';
        }, 3000);
        </script>
 </head>

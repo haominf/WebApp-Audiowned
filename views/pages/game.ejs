@@ -4,6 +4,8 @@
         <meta charset="utf-8" />
         <title>Audiowned</title>
 
+        <!-- <meta http-equiv="refresh" content="3"> -->
+
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="static/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="static/css/animations.css" type="text/css" />
@@ -18,7 +20,25 @@
        <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.6.1/dist/progressbar.js"></script>
        <script>
                 var date;
-                counter = 0;
+                counter = 1;
+                var correctAns;
+                // function newBar() {
+                //         date = new Date();
+                //         var bar = new ProgressBar.Line(progress, {
+                //                 strokeWidth: 4,
+                //                 duration: 30000,
+                //                 color: '#FFEA82',
+                //                 trailColor: '#eee',
+                //                 trailWidth: 1,
+                //                 svgStyle: {width: '100%', height: '100%'},
+                //                 from: {color: '#5AFE32'},
+                //                 to: {color: '#FA483F'},
+                //                 step: (state, bar) => {
+                //                 bar.path.setAttribute('stroke', state.color);
+                //                 }
+                //         });
+                //         bar.animate(1.0);
+                // }
                 $(document).ready(function(){
                        date = new Date();
                        var bar = new ProgressBar.Line(progress, {
@@ -41,51 +61,60 @@
                        var time = currTime.getSeconds() - date.getSeconds();
                        var score;
                        console.log(time);
-                       if (num == counter) {
-                               score = 100 - counter;
+                       if (num == correctAns) {
+                               score = 100 - time;
                                console.log(score);
                        }
                        $.ajax({
                                 type: "POST",
                                 url: "/submit",
                                 data: {
-                                        // "choice": num,
                                         "score": score,
                                 },
-                                // contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 statusCode: {
                                         200: function(){
                                                 console.log("time:" + time);
                                                 counter++;
                                                 player.pause();
+                                                // $("#buttons").addClass('animated slideOutRight').delay(300).hide(1);
+                                                // $(document).ajaxStop(function(){
+                                                //         window.location.reload(true);
+                                                //     });
 
+                                                        console.log("hi");
+                                                        // window.location.reload(true);
                                                 // player.pause();
                                                 playmusic(counter);
 
                                         }
                                 },
-                                error: function() {
-                                        console.log("error");
-                                        counter++;
-                                        player.pause();
-                                        playmusic(counter);
-                                }
+                                // error: function() {
+                                //         console.log("error");
+                                //         counter++;
+                                //         player.pause();
+                                //         playmusic(counter);
+                                // }
                         });
+                                window.location.reload(true);
+
                 };
                 function playmusic() {
-                        console.log("music music music");
+                        // newBar();
+                        $("#buttons").addClass('animated slideInLeft');
+
                         var myVar = JSON.parse(htmlDecode("<%= JSON.stringify(MUSIC) %>"));
                         var counter = getRandomInt(0, 40);
-                        console.log(myVar);
                         console.log("counter is" + counter);
                         player = new Audio(myVar[counter].url);
-                        if (counter >= 10) {
+                        if (counter >= 10 && counter <= 37) {
+                                correctAns = 1;
                                 document.getElementById("song1").innerHTML = myVar[counter].name;
                                 document.getElementById("song2").innerHTML = myVar[counter + 3].name;
                                 document.getElementById("song3").innerHTML = myVar[counter - 3].name;
                                 document.getElementById("song4").innerHTML = myVar[counter + 1].name;
-                        } else if (counter <= 30) {
+                        } else if (counter <= 30 && counter > 0) {
+                                correctAns = 2;
                                 document.getElementById("song1").innerHTML = myVar[counter + 10].name;
                                 document.getElementById("song2").innerHTML = myVar[counter].name;
                                 document.getElementById("song3").innerHTML = myVar[counter + 5].name;
@@ -104,21 +133,19 @@
                         return Math.floor(Math.random() * (max - min + 1)) + min;
                 }
 
-                /*
+
                 setTimeout(function(){
                        $("#gamePage").addClass('animated slideOutRight');
                         setTimeout(function(){
-                                for (int i = 0; i < lengthwindow.location.href="/index";
-                                // window.location.href='index';
+                                window.location.reload(true);
                         }, 800);
                 }, 30000);
-                */
+
        </script>
 
 </head>
-<div id="gamePage">
-<body onload="playmusic()">
-<!-- <body onload="playmusic()"> -->
+<div id="gamePage" >
+<body onload="playmusic()" class="animated slideInLeft">
 
             <source src="bgmusic.mp3" type="audio/mpeg">
         <!-- <audio autoplay loop>
@@ -145,7 +172,7 @@
                 <h3 id="oppScore">SCORE: <oppScore> </h3>
         </div>
 
-        <div id="buttons">
+        <div id="buttons" class="slideInLeft">
                 <div>
                      <button class="button" onclick="sendChoice('1')" id="song1"> song 1</button>
                 </div>

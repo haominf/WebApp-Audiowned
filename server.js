@@ -144,7 +144,7 @@ app.post('/submit', function(req, res) {
     //     // db.users.update({username: req.body.username}, {$push: {scores: req.body.score}});
     // }
 
-    console.log("post");
+    // console.log("post");
     // console.log(req.body.number);
     // console.log("hi");
 
