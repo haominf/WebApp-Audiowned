@@ -1,146 +1,190 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <meta charset="utf-8" />
-        <title>Audiowned</title>
+    <meta charset="utf-8" />
+    <title>Audiowned</title>
+    <!-- <meta http-equiv="refresh" content="3"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/animations.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/gamestyle.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
-        <!-- <meta http-equiv="refresh" content="3"> -->
-
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="static/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="static/css/animations.css" type="text/css" />
-        <link rel="stylesheet" href="static/css/gamestyle.css" type="text/css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-
-        <!-- Latest compiled JavaScript -->
-       <script src="static/js/bootstrap.min.js"></script>
-       <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.6.1/dist/progressbar.js"></script>
-       <script>
-                var date;
-                counter = 1;
-                var correctAns;
-                // function newBar() {
-                //         date = new Date();
-                //         var bar = new ProgressBar.Line(progress, {
-                //                 strokeWidth: 4,
-                //                 duration: 30000,
-                //                 color: '#FFEA82',
-                //                 trailColor: '#eee',
-                //                 trailWidth: 1,
-                //                 svgStyle: {width: '100%', height: '100%'},
-                //                 from: {color: '#5AFE32'},
-                //                 to: {color: '#FA483F'},
-                //                 step: (state, bar) => {
-                //                 bar.path.setAttribute('stroke', state.color);
-                //                 }
-                //         });
-                //         bar.animate(1.0);
-                // }
-                $(document).ready(function(){
-                       date = new Date();
-                       var bar = new ProgressBar.Line(progress, {
-                               strokeWidth: 4,
-                               duration: 30000,
-                               color: '#FFEA82',
-                               trailColor: '#eee',
-                               trailWidth: 1,
-                               svgStyle: {width: '100%', height: '100%'},
-                               from: {color: '#5AFE32'},
-                               to: {color: '#FA483F'},
-                               step: (state, bar) => {
-                               bar.path.setAttribute('stroke', state.color);
-                               }
-                       });
-                       bar.animate(1.0);
-               });
-               function sendChoice(num) {
-                       var currTime = new Date();
-                       var time = currTime.getSeconds() - date.getSeconds();
-                       var score;
-                       console.log(time);
-                       if (num == correctAns) {
-                               score = 100 - time;
-                               console.log(score);
-                       }
-                       $.ajax({
-                                type: "POST",
-                                url: "/submit",
-                                data: {
-                                        "score": score,
-                                },
-                                dataType: "json",
-                                statusCode: {
-                                        200: function(){
-                                                console.log("time:" + time);
-                                                counter++;
-                                                player.pause();
-                                                // $("#buttons").addClass('animated slideOutRight').delay(300).hide(1);
-                                                // $(document).ajaxStop(function(){
-                                                //         window.location.reload(true);
-                                                //     });
-
-                                                        console.log("hi");
-                                                        // window.location.reload(true);
-                                                // player.pause();
-                                                playmusic(counter);
-
-                                        }
-                                },
-                                // error: function() {
-                                //         console.log("error");
-                                //         counter++;
-                                //         player.pause();
-                                //         playmusic(counter);
-                                // }
-                        });
-                                window.location.reload(true);
-
-                };
-                function playmusic() {
-                        // newBar();
-                        $("#buttons").addClass('animated slideInLeft');
-
-                        var myVar = JSON.parse(htmlDecode("<%= JSON.stringify(MUSIC) %>"));
-                        var counter = getRandomInt(0, 40);
-                        console.log("counter is" + counter);
-                        player = new Audio(myVar[counter].url);
-                        if (counter >= 10 && counter <= 37) {
-                                correctAns = 1;
-                                document.getElementById("song1").innerHTML = myVar[counter].name;
-                                document.getElementById("song2").innerHTML = myVar[counter + 3].name;
-                                document.getElementById("song3").innerHTML = myVar[counter - 3].name;
-                                document.getElementById("song4").innerHTML = myVar[counter + 1].name;
-                        } else if (counter <= 30 && counter > 0) {
-                                correctAns = 2;
-                                document.getElementById("song1").innerHTML = myVar[counter + 10].name;
-                                document.getElementById("song2").innerHTML = myVar[counter].name;
-                                document.getElementById("song3").innerHTML = myVar[counter + 5].name;
-                                document.getElementById("song4").innerHTML = myVar[counter - 1].name;
-                        }
-
-                        player.autoplay = true;
+    <!-- Latest compiled JavaScript -->
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.6.1/dist/progressbar.js"></script>
+    <script>
+        var date;
+        var counter = 1;
+        var correctAns;
+        // function newBar() {
+        //         date = new Date();
+        //         var bar = new ProgressBar.Line(progress, {
+        //                 strokeWidth: 4,
+        //                 duration: 30000,
+        //                 color: '#FFEA82',
+        //                 trailColor: '#eee',
+        //                 trailWidth: 1,
+        //                 svgStyle: {width: '100%', height: '100%'},
+        //                 from: {color: '#5AFE32'},
+        //                 to: {color: '#FA483F'},
+        //                 step: (state, bar) => {
+        //                 bar.path.setAttribute('stroke', state.color);
+        //                 }
+        //         });
+        //         bar.animate(1.0);
+        // }
+        $(document).ready(function(){
+            var bar = new ProgressBar.Line(progress, {
+                    strokeWidth: 4,
+                    duration: 30000,
+                    color: '#FFEA82',
+                    trailColor: '#eee',
+                    trailWidth: 1,
+                    svgStyle: {width: '100%', height: '100%'},
+                    from: {color: '#5AFE32'},
+                    to: {color: '#FA483F'},
+                    step: (state, bar) => {
+                    bar.path.setAttribute('stroke', state.color);
                 }
-                function htmlDecode(input){
-                    var e = document.createElement('div');
-                    e.innerHTML = input;
-                    return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+            });
+            bar.animate(1.0);
+        });
+        
+        function sendChoice(num) {
+            var currTime = new Date();
+            var time = currTime.getSeconds() - date.getSeconds();
+            var score;
+            if (num == correctAns) {
+                console.log("correct wow");
+                score = 100 - time;
+                var oldScore = document.getElementById('ownScore').innerHTML.split(' ');
+                var newScore;
+                if (oldScore.length == 2) {
+                    newScore = score;
                 }
-
-                function getRandomInt(min, max) {
-                        return Math.floor(Math.random() * (max - min + 1)) + min;
+                else {
+                    newScore = parseInt(oldScore) + score;
                 }
+                document.getElementById('ownScore').innerHTML = "SCORE: " + newScore;
+            }
+            $.ajax({
+                type: "POST",
+                url: "/submit",
+                data: {
+                    "score": score,
+                },
+                dataType: "json",
+                statusCode: {
+                    200: function(){
+                        console.log("time:" + time);
+                        counter++;
+                        player.pause();
+                        // $("#buttons").addClass('animated slideOutRight').delay(300).hide(1);
+                        // $(document).ajaxStop(function(){
+                        //         window.location.reload(true);
+                        //     });
+                        // console.log("hi");
+                        // window.location.reload(true);
+                        // player.pause();
+                        playmusic(counter);
+                    }
+                },
+            // error: function() {
+            //         console.log("error");
+            //         counter++;
+            //         player.pause();
+            //         playmusic(counter);
+            // }
+            });
+            window.location.reload(true);
+        };
+        function playmusic() {
+                // newBar();
+                $("#buttons").addClass('animated slideInLeft');
+                date = new Date();
+                var songs = JSON.parse(htmlDecode("<%= JSON.stringify(MUSIC) %>"));
+                var counter = getRandomInt(0, 39);
+                player = new Audio(songs[counter].url);
+                var wrong1 = getRandomInt(0, 39), wrong2 = getRandomInt(0, 39), wrong3 = getRandomInt(0, 39);
+                while (wrong1 == counter || wrong2 == counter || wrong3 == counter) {
+                    if (wrong1 == counter || wrong1 == wrong2 || wrong1 == wrong3) {
+                        wrong1 = getRandomInt(0, 39);
+                    }
+                    if (wrong2 == counter || wrong2 == wrong3) {
+                        wrong2 = getRandomInt(0, 39);
+                    }
+                    if (wrong3 == counter) {
+                        wrong3 = getRandomInt(0, 39);
+                    }
+                }
+                correctAns = getRandomInt(1, 5);
+                switch (correctAns) {
+                    case 1:
+                        document.getElementById("song1").innerHTML = songs[counter].name;
+                        document.getElementById("song2").innerHTML = songs[wrong1].name;
+                        document.getElementById("song3").innerHTML = songs[wrong2].name;
+                        document.getElementById("song4").innerHTML = songs[wrong3].name;
+                        break;
+                    case 2:
+                        document.getElementById("song2").innerHTML = songs[counter].name;
+                        document.getElementById("song1").innerHTML = songs[wrong1].name;
+                        document.getElementById("song3").innerHTML = songs[wrong2].name;
+                        document.getElementById("song4").innerHTML = songs[wrong3].name;
+                        break;
+                    case 3:
+                        document.getElementById("song3").innerHTML = songs[counter].name;
+                        document.getElementById("song2").innerHTML = songs[wrong1].name;
+                        document.getElementById("song1").innerHTML = songs[wrong2].name;
+                        document.getElementById("song4").innerHTML = songs[wrong3].name;
+                        break;
+                    case 4:
+                        document.getElementById("song4").innerHTML = songs[counter].name;
+                        document.getElementById("song2").innerHTML = songs[wrong1].name;
+                        document.getElementById("song3").innerHTML = songs[wrong2].name;
+                        document.getElementById("song1").innerHTML = songs[wrong3].name;
+                        break;
+                }
+                
+                /*
+                if (counter >= 10 && counter <= 37) {
+                        correctAns = 1;
+                        document.getElementById("song1").innerHTML = songs[counter].name;
+                        document.getElementById("song2").innerHTML = songs[counter + 3].name;
+                        document.getElementById("song3").innerHTML = songs[counter - 3].name;
+                        document.getElementById("song4").innerHTML = songs[counter + 1].name;
+                } else if (counter <= 30 && counter > 0) {
+                        correctAns = 2;
+                        document.getElementById("song1").innerHTML = songs[counter + 10].name;
+                        document.getElementById("song2").innerHTML = songs[counter].name;
+                        document.getElementById("song3").innerHTML = songs[counter + 5].name;
+                        document.getElementById("song4").innerHTML = songs[counter - 1].name;
+                }
+                else if () {
+                    
+                }
+                */
+                player.autoplay = true;
+        }
 
+        function htmlDecode(input){
+            var e = document.createElement('div');
+            e.innerHTML = input;
+            return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+        }
 
+        function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        setTimeout(function(){
+               $("#gamePage").addClass('animated slideOutRight');
                 setTimeout(function(){
-                       $("#gamePage").addClass('animated slideOutRight');
-                        setTimeout(function(){
-                                window.location.reload(true);
-                        }, 800);
-                }, 30000);
-
+                        window.location.reload(true);
+                }, 800);
+        }, 30000);
        </script>
 
 </head>
@@ -168,22 +212,22 @@
                 </div>
         </div>
         <div id="scores">
-                <h3 id="ownScore">SCORE: <ownScore> </h3>
+                <h3 id="ownScore">SCORE: </h3>
                 <h3 id="oppScore">SCORE: <oppScore> </h3>
         </div>
 
         <div id="buttons" class="slideInLeft">
                 <div>
-                     <button class="button" onclick="sendChoice('1')" id="song1"> song 1</button>
+                     <button class="button" onclick="sendChoice(1)" id="song1"> song 1</button>
                 </div>
                 <div>
-                    <button class="button" onclick="sendChoice('2')" id="song2"> song 2 </button>
+                    <button class="button" onclick="sendChoice(2)" id="song2"> song 2 </button>
                 </div>
                 <div>
-                    <button class="button" onclick="sendChoice('3')" id="song3"> song 3 </button>
+                    <button class="button" onclick="sendChoice(3)" id="song3"> song 3 </button>
                 </div>
                 <div>
-                    <button class="button" onclick="sendChoice('4')" id="song4"> song 4 </button>
+                    <button class="button" onclick="sendChoice(4)" id="song4"> song 4 </button>
                 </div>
 
         </div>
