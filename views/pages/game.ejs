@@ -16,33 +16,18 @@
     <script src="static/js/bootstrap.min.js"></script>
     <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.6.1/dist/progressbar.js"></script>
     <script>
+        var round = 1;
         var date;
         var counter = 1;
         var correctAns;
         var index = 0;
         var used = new Array(10);
+        var bar;
 
-        // function newBar() {
-        //         date = new Date();
-        //         var bar = new ProgressBar.Line(progress, {
-        //                 strokeWidth: 4,
-        //                 duration: 30000,
-        //                 color: '#FFEA82',
-        //                 trailColor: '#eee',
-        //                 trailWidth: 1,
-        //                 svgStyle: {width: '100%', height: '100%'},
-        //                 from: {color: '#5AFE32'},
-        //                 to: {color: '#FA483F'},
-        //                 step: (state, bar) => {
-        //                 bar.path.setAttribute('stroke', state.color);
-        //                 }
-        //         });
-        //         bar.animate(1.0);
-        // }
         $(document).ready(function(){
-            var bar = new ProgressBar.Line(progress, {
+            bar = new ProgressBar.Line(progress, {
                     strokeWidth: 4,
-                    duration: 30000,
+                    duration: 10000,
                     color: '#FFEA82',
                     trailColor: '#eee',
                     trailWidth: 1,
@@ -55,23 +40,35 @@
             });
             bar.animate(1.0);
         });
-        
+
         function sendChoice(num) {
+                if (round == 8) {
+                        $("#gamePage").addClass('animated slideOutRight');
+                         setTimeout(function(){
+                                 window.location.href='/win';
+                         }, 800);
+                }
+            round += 1;
+            document.getElementById('loadheader').innerHTML = "ROUND " + round;
+            bar.set(0.0);
+            bar.animate(1.0);
+
             var currTime = new Date();
             var time = currTime.getSeconds() - date.getSeconds();
             var score;
             if (num == correctAns) {
-                console.log("correct wow");
                 score = 100 - time;
                 var oldScore = document.getElementById('ownScore').innerHTML.split(' ')[1];
                 var newScore = parseInt(oldScore) + score;
                 document.getElementById('ownScore').innerHTML = "SCORE: " + newScore;
             }
+
             $.ajax({
                 type: "POST",
                 url: "/submit",
                 data: {
                     "score": score,
+                    "round": round,
                 },
                 dataType: "json",
                 statusCode: {
@@ -79,27 +76,18 @@
                         console.log("time:" + time);
                         counter++;
                         player.pause();
-                        // $("#buttons").addClass('animated slideOutRight').delay(300).hide(1);
-                        // $(document).ajaxStop(function(){
-                        //         window.location.reload(true);
-                        //     });
-                        // console.log("hi");
-                        // window.location.reload(true);
-                        // player.pause();
+                        player.pause();
                         playmusic(counter);
                     }
                 },
-            // error: function() {
-            //         console.log("error");
-            //         counter++;
-            //         player.pause();
-            //         playmusic(counter);
-            // }
+                error: function() {
+                    console.log("error");
+                    counter++;
+                    player.pause();
+                }
             });
-            // window.location.reload(true);
         };
         function playmusic() {
-                // newBar();
                 $("#buttons").addClass('animated slideInLeft');
                 date = new Date();
                 var songs = JSON.parse(htmlDecode("<%= JSON.stringify(MUSIC) %>"));
@@ -111,7 +99,7 @@
                 index++;
 
                 player = new Audio(songs[counter].url);
-                
+
                 var wrong1 = getRandomInt(0, 39), wrong2 = getRandomInt(0, 39), wrong3 = getRandomInt(0, 39);
                 while (wrong1 == counter || wrong2 == counter || wrong3 == counter) {
                     if (wrong1 == counter || wrong1 == wrong2 || wrong1 == wrong3) {
@@ -154,25 +142,7 @@
                     default:
                         break;
                 }
-                
-                /*
-                if (counter >= 10 && counter <= 37) {
-                        correctAns = 1;
-                        document.getElementById("song1").innerHTML = songs[counter].name;
-                        document.getElementById("song2").innerHTML = songs[counter + 3].name;
-                        document.getElementById("song3").innerHTML = songs[counter - 3].name;
-                        document.getElementById("song4").innerHTML = songs[counter + 1].name;
-                } else if (counter <= 30 && counter > 0) {
-                        correctAns = 2;
-                        document.getElementById("song1").innerHTML = songs[counter + 10].name;
-                        document.getElementById("song2").innerHTML = songs[counter].name;
-                        document.getElementById("song3").innerHTML = songs[counter + 5].name;
-                        document.getElementById("song4").innerHTML = songs[counter - 1].name;
-                }
-                else if () {
-                    
-                }
-                */
+
                 player.autoplay = true;
         }
 
@@ -187,11 +157,8 @@
         }
 
         setTimeout(function(){
-               $("#gamePage").addClass('animated slideOutRight');
-                setTimeout(function(){
-                        window.location.reload(true);
-                }, 800);
-        }, 30000);
+               sendChoice(10);
+        }, 10000);
        </script>
 
 </head>
@@ -207,7 +174,7 @@
             Your browser does not support the audio element.
         </audio> -->
         <header>
-              <h1 id="loadheader">ROUND 3</h1>
+              <h1 id="loadheader">ROUND 1</h1>
         </header>
         <div id="pics">
                 <div id="userpic">
