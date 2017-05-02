@@ -107,6 +107,8 @@ app.get('/loading', function(req, res) {
 
 time = 0;
 app.get('/matched', function(req, res) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
     db.collection('users', function(error, coll) {
             coll.find().sort({time:1}).limit(1).toArray(
                 function (error, result) {
@@ -116,21 +118,30 @@ app.get('/matched', function(req, res) {
                 else {
                     oppname = result[0].username;
                     opppic = result[0].pic;
-                    res.send(result);
+                    data = result[0];
+                    time++;
+                    newUser = {"username:"}
+                    res.render('matched', {Name:player_name, Pic_URL:player_pic, OppName:oppname, OppPic:opppic});
                 }
             });
     });
-    res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
 
+/*
 app.post('/game', function(req, res) {
-    res.render('game', {Name:player_name, Pic_URL:player_pic});
+    res.render('game', {Name:player_name, Pic_URL:player_pic, OppName:oppname, OppPic:opppic});
 });
+*/
 
 app.post('/submit', function(req, res) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     res.sendStatus(200);
+
+    var round = req.body.round;
+    var score = req.body.score;
+    var song = req.body.song;
+
     // if (req.body.round == 1) {
     //     var info = {
     //         "username": req.body.username,
