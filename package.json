@@ -25,7 +25,6 @@
     "progressbar.js": "latest",
     "request": "latest",
     "querystring": "latest",
-    "progressbar.js": "latest",
-	"spotify-web-api-node": "latest"
+    "progressbar.js": "latest"
 	}
 }
