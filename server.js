@@ -31,7 +31,7 @@ var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
 var spotify_api = "https://api.spotify.com/";
 var client_id = '67fd18a6482b41a5aa0c8b71b1517989'; // Your client id
 var client_secret = '7a42b826ed224ed0a94634b2d12152b6'; // Your secret
-var redirect_uri = 'http://localhost:' + app.get('port') + '/callback' || 'https://audiowned.herokuapp.com/callback';
+var redirect_uri = 'https://audiowned.herokuapp.com/callback';
 var auth_code, refresh_token;
 
 /**
