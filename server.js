@@ -20,11 +20,12 @@ app.use('/static', express.static('public')).use(cookieParser());
 
 // mongo things
 var mongoUri = process.env.MONGODB_URI || process.env.MONGOLAB_URI ||
-    process.env.MONGOHQ_URL || 'mongodb://localhost/';
+    process.env.MONGOHQ_URL || 'mongodb://127.0.0.1:27017/users';
 var MongoClient = require('mongodb').MongoClient;
 var format = require('util').format;
 var db = MongoClient.connect(mongoUri, function(error, databaseConnection) {
     db = databaseConnection;
+    console.log('error??' + error);
 });
 
 // spotify things
@@ -77,6 +78,10 @@ app.post('/login', function(req, res) {
     res.send('hello');
 });
 
+app.get('/win', function(req, res) {
+        res.render('win', {Name:player_name, Pic_URL:player_pic});
+});
+
 app.get('/home', function(req, res) {
     res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
 });
@@ -100,18 +105,21 @@ app.get('/loading', function(req, res) {
     res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
 });
 
+time = 0;
 app.get('/matched', function(req, res) {
-    /*
-    db.collection.find().sort({time:-1}).limit(1).toArray(
-        function (error, result) {
-        if (error) {
-            res.send(500);
-        }
-        else {
-            res.send(result);
-        }
+    db.collection('users', function(error, coll) {
+            coll.find().sort({time:1}).limit(1).toArray(
+                function (error, result) {
+                if (error) {
+                    res.send(500);
+                }
+                else {
+                    oppname = result[0].username;
+                    opppic = result[0].pic;
+                    res.send(result);
+                }
+            });
     });
-    */
     res.render('matched', {Name:player_name, Pic_URL:player_pic});
 });
 
@@ -199,12 +207,6 @@ app.get('/game', function(req, res) {
             });
         }
     });
-});
-
-app.post('/submit', function(req, res) {
-    // console.log(req.body);
-    // console.log('in game');
-    res.render('game', {Name:player_name, Pic_URL:player_pic});
 });
 
 app.get('/callback', function(req, res) {

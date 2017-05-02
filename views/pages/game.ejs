@@ -42,6 +42,10 @@
         });
 
         function sendChoice(num) {
+                // var oldOppScore = document.getElementById('ownScore').innerHTML.split(' ')[1];
+                // var oppScore = getRandomInt(0, 100) + oldOppScore;
+                // document.getElementById('oppScore').innerHTML = "SCORE: " + oppScore;
+
                 if (round == 8) {
                         $("#gamePage").addClass('animated slideOutRight');
                          setTimeout(function(){
@@ -61,6 +65,7 @@
                 var oldScore = document.getElementById('ownScore').innerHTML.split(' ')[1];
                 var newScore = parseInt(oldScore) + score;
                 document.getElementById('ownScore').innerHTML = "SCORE: " + newScore;
+
             }
 
             $.ajax({
@@ -178,11 +183,11 @@
         </header>
         <div id="pics">
                 <div id="userpic">
-                    <img src="https://scontent.fluk1-1.fna.fbcdn.net/v/t31.0-8/16707354_1270731589629046_5534878168568381697_o.jpg?oh=51f6c7e662abb9b9ad3e9d619ab21f88&oe=59556726" alt="l8k8" width=150px>
+                    <img src=<%=player_pic%> alt="user profile" width=150px>
                 </div>
                 <div id="progress"></div>
                 <div id="opppic">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt="placeholder" width="150px">
+                        <img src="https://scontent.fluk1-1.fna.fbcdn.net/v/t31.0-8/16707354_1270731589629046_5534878168568381697_o.jpg?oh=51f6c7e662abb9b9ad3e9d619ab21f88&oe=59556726" alt="l8k8" width=150px>
                 </div>
         </div>
         <div id="scores">
