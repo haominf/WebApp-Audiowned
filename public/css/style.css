@@ -123,3 +123,13 @@ img {
 #loading-page {
         display: none;
 }
+
+#songs {
+		font-family: "Source Code Pro", sans-serif;
+		font-weight: lighter;
+		font-size: 20px;
+		font-color: white;
+		text-align: center;
+		letter-spacing: 3px;
+		padding-top: 20px;
+}

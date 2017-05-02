@@ -69,9 +69,7 @@ h1 {
         position: relative;
         text-align: center;
         margin: auto;
-
 }
-
 
 img {
         position: absolute;
@@ -84,4 +82,14 @@ img {
         margin: auto;
         height: 350px;
         width: auto;
+}
+
+#songs {
+		font-family: "Source Code Pro", sans-serif;
+		font-weight: lighter;
+		font-size: 20px;
+		font-color: white;
+		text-align: center;
+		letter-spacing: 3px;
+		padding-top: 20px;
 }

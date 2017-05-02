@@ -82,6 +82,27 @@ app.get('/win', function(req, res) {
         res.render('win', {Name:player_name, Pic_URL:player_pic});
 });
 
+app.get('/lose', function(req, res) {
+        res.render('lose', {Name:player_name, Pic_URL:player_pic});
+});
+
+app.get('/songs', function(req, res) {
+	db.collection('users', function(error, coll) {
+		coll.findOne({"username": player_name},
+			function (error, result) {
+			if (error) {
+				res.send(500);
+			}
+			else {
+				song_array = result.songs;
+				console.log(song_array);
+				res.render('songs', {"SONGS":song_array});
+			}
+		});
+	});
+//    res.render('songs', {Name:player_name, Pic_URL:player_pic});
+});
+
 app.get('/home', function(req, res) {
     res.render('home&loading', {Name:player_name, Pic_URL:player_pic});
 });
@@ -120,10 +141,18 @@ app.get('/matched', function(req, res) {
                     opppic = result[0].pic;
                     data = result[0];
                     time++;
-                    newUser = {"username:"}
                     res.render('matched', {Name:player_name, Pic_URL:player_pic, OppName:oppname, OppPic:opppic});
                 }
             });
+			newUser = {"username": player_name, "pic": player_pic, "scores": [], "songs": []};
+			coll.insert(newUser, function(error, coll) {
+				if (error) {
+					res.send(500);
+				}
+				else {
+					console.log("inserted");
+				}
+			});
     });
 });
 
@@ -134,41 +163,33 @@ app.post('/game', function(req, res) {
 */
 
 app.post('/submit', function(req, res) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.sendStatus(200);
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "X-Requested-With");
 
-    var round = req.body.round;
-    var score = req.body.score;
-    var song = req.body.song;
+	var round = req.body.round - 2;
+	var score = req.body.score;
+	var song = req.body.song;
 
-    // if (req.body.round == 1) {
-    //     var info = {
-    //         "username": req.body.username,
-    //         "pic": req.body.pic,
-    //         "scores": [req.body.score]
-    //     }
+	db.collection('users', function(error, coll) {
+	coll.update(
+		{"username": player_name},
+		{ $push: { "scores": score } }
+	)
+	coll.update(
+		{"username": player_name},
+		{ $push: { "songs": song } }
+	)
+	console.log("updated");
+	});
+	console.log('the round is ' + round);
+	console.log('score: ' + data.scores[round]);
+	console.log('my score: ' + score);
+//	res.send(data.scores[round]);
 
-    //     db.collection('users', function (error, coll) {
-    //         coll.insert(info, function(error) {
-    //             if (error) {
-    //                 res.send(500);
-    //                 return;
-    //             }
-    //         });
-    //     });
-
-    // }
-    // else {
-    //     // db.users.update({username: req.body.username}, {$push: {scores: req.body.score}});
-    // }
-
-    // console.log("post");
-    // console.log(req.body.number);
-    // console.log("hi");
-
-    // console.log('enter matched');
-    //res.render('matched', {Name:player_name, Pic_URL:player_pic});
+	var tosend = {'score': data.scores[round]};
+	sending = JSON.stringify(tosend);
+	res.send(sending);
+	//res.sendStatus(200);
 });
 
 app.get('/game', function(req, res) {

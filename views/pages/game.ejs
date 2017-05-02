@@ -23,13 +23,16 @@
         var used = [];
         var used = new Array(10);
         var bar;
-
+        var correctPos;
+        var timer;
+        var player = null;
+        var song;
         $(document).ready(function(){
+            date = new Date();
             for (var i = 0; i < used.length; i++) {
                 used[i] = 0;
             }
             date = new Date();
-
             bar = new ProgressBar.Line(progress, {
                     strokeWidth: 4,
                     duration: 10000,
@@ -45,56 +48,58 @@
             });
             bar.animate(1.0);
         });
-
         function sendChoice(num) {
                 // var oldOppScore = document.getElementById('ownScore').innerHTML.split(' ')[1];
                 // var oppScore = getRandomInt(0, 100) + oldOppScore;
                 // document.getElementById('oppScore').innerHTML = "SCORE: " + oppScore;
+            if (round == 8) {
+                    $("#gamePage").addClass('animated slideOutRight');
+                     setTimeout(function(){
+						 	if (newScore >= user_score){
+								window.location.href='/win';
+							}
+							else {
+								window.location.href='/lose';
+							}
 
-                if (round == 8) {
-                        $("#gamePage").addClass('animated slideOutRight');
-                         setTimeout(function(){
-                                 window.location.href='/win';
-                         }, 800);
-                }
+                     }, 800);
+            }
             round += 1;
             document.getElementById('loadheader').innerHTML = "ROUND " + round;
             bar.set(0.0);
             bar.animate(1.0);
-
             var currTime = new Date();
             var time = Math.floor((currTime.getTime() - date.getTime()) / 1000);
-            if (num != correctPos) {
-                return;
+            if (num == correctPos) {
+                var score = 100 - time;
+             	oldScore = document.getElementById('ownScore').innerHTML.split(' ')[1];
+                newScore = parseInt(oldScore) + score;
+                document.getElementById('ownScore').innerHTML = "SCORE: " + newScore;
             }
-            var score;
-            score = 100 - time;
-            var oldScore = document.getElementById('ownScore').innerHTML.split(' ')[1];
-            var newScore = parseInt(oldScore) + score;
-            document.getElementById('ownScore').innerHTML = "SCORE: " + newScore;
 
             $.ajax({
                 type: "POST",
                 url: "/submit",
                 data: {
-                    "score": score,
+                    "score": newScore,
                     "round": round,
+                    "song": song
                 },
-                dataType: "json",
-                statusCode: {
-                    200: function(){
-                        player.pause();
-                        playmusic(counter);
-                    }
+				dataType: 'json',
+				success: function(res) {
+					player.pause();
+	                date = new Date();
+	                playmusic();
+					user_score = res['score'];
+					document.getElementById('oppScore').innerHTML = "SCORE: " + user_score;
                 },
-                error: function() {
-                    console.log("error");
-                    counter++;
-                    player.pause();
+                error: function(a, b, c) {
+                    console.log(c);
+                    // counter++;
+                    // player.pause();
                 }
             });
         };
-
         function getRandomNums(len, max) {
             var arr = [];
             while (arr.length < len){
@@ -106,17 +111,22 @@
             }
             return arr;
         }
-
         function playmusic() {
             // newBar();
-            $("#buttons").addClass('animated slideInLeft');
+            if (player != null) {
+                player.pause();
+            }
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+                   sendChoice(10);
+            }, 10000);
 
+            $("#buttons").addClass('animated slideInLeft');
             var songs = JSON.parse(htmlDecode("<%= JSON.stringify(MUSIC) %>"));
             /* get four random numbers in 0 to 39
              * the correct song will be at index 0 */
             arr = getRandomNums(4, 39);
             counter = arr[0];
-
             /* get a random song that hasn't been played before */
             if (index != 0) {
                 while (used.indexOf(counter) != -1) {
@@ -124,14 +134,12 @@
                     counter = arr[0];
                 }
             }
-
             /* store the song in the used collection so that it isn't replayed */
             used[index] = counter;
             index++;
-
             player = new Audio(songs[counter].url);
+            song = songs[counter].name;
             console.log(songs[counter].name);
-
             /* randomly choose the position in the list of songs */
             correctPos = getRandomInt(1, 4);
             switch (correctPos) {
@@ -164,20 +172,15 @@
             }
             player.autoplay = true;
         }
-
         function htmlDecode(input){
             var e = document.createElement('div');
             e.innerHTML = input;
             return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
         }
-
         function getRandomInt(min, max) {
                 return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
-        setTimeout(function(){
-               sendChoice(10);
-        }, 10000);
        </script>
 
 </head>
@@ -192,7 +195,7 @@
                 </div>
                 <div id="progress"></div>
                 <div id="opppic">
-                        <img src="https://scontent.fluk1-1.fna.fbcdn.net/v/t31.0-8/16707354_1270731589629046_5534878168568381697_o.jpg?oh=51f6c7e662abb9b9ad3e9d619ab21f88&oe=59556726" alt="l8k8" width=150px>
+                        <img src="<%=opppic%>" alt="l8k8" width=150px>
                 </div>
         </div>
         <div id="scores">

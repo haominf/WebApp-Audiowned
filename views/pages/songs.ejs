@@ -24,37 +24,33 @@
                 $("#winpage").addClass('animated slideInLeft');
 
                 function viewSongs() {
-                        window.location.href='/songs';
+                    	window.location.href='/songs';
                 }
+
        </script>
 </head>
 
 <body>
-        <!-- <audio autoplay loop>
-            <source src="bgmusic.mp3" type="audio/mpeg">
-        </audio>
-        <audio controls autoplay>
-            <source src="bgmusic.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio> -->
+
+	<audio autoplay="true">
+		<source src="static/bgmusic.mp3" type="audio/mpeg">
+		Your browser does not support the audio element.
+	</audio>
         <div id="winpage" class="animated slideInLeft">
 
         <header>
-		<h1 id="loadheader">CONGRATS <%=player_name%></h1>
+		<h1 id="loadheader">SONGS</h1>
         </header>
-
-        <div id="userimage">
-
-                <img src=<%=player_pic%> alt="user pic" width=400px>
-        </div>
-        <div id="buttons">
+					<% SONGS.forEach(function(p){ %>
+				  <div id=songs>
+					  <%- p %>
+				  </div>
 
 
-                <div>
-                    <button class="button" onclick="viewSongs()" >VIEW SONGS</button>
-                </div>
+				  <% }); %>
 
-        </div>
+
+
         </div>
 
 
