@@ -18,9 +18,8 @@
     <script>
         var date;
         var counter = 1;
-        var correctAns;
         var index = 0;
-        var used = new Array(10);
+        var used = [];
 
         // function newBar() {
         //         date = new Date();
@@ -40,6 +39,11 @@
         //         bar.animate(1.0);
         // }
         $(document).ready(function(){
+            for (var i = 0; i < used.length; i++) {
+                used[i] = 0;
+            }
+            date = new Date();
+            
             var bar = new ProgressBar.Line(progress, {
                     strokeWidth: 4,
                     duration: 30000,
@@ -58,15 +62,16 @@
         
         function sendChoice(num) {
             var currTime = new Date();
-            var time = currTime.getSeconds() - date.getSeconds();
-            var score;
-            if (num == correctAns) {
-                console.log("correct wow");
-                score = 100 - time;
-                var oldScore = document.getElementById('ownScore').innerHTML.split(' ')[1];
-                var newScore = parseInt(oldScore) + score;
-                document.getElementById('ownScore').innerHTML = "SCORE: " + newScore;
+            var time = Math.floor((currTime.getTime() - date.getTime()) / 1000);
+            if (num != correctPos) {
+                return;
             }
+            var score;
+            score = 100 - time;
+            var oldScore = document.getElementById('ownScore').innerHTML.split(' ')[1];
+            var newScore = parseInt(oldScore) + score;
+            document.getElementById('ownScore').innerHTML = "SCORE: " + newScore;
+
             $.ajax({
                 type: "POST",
                 url: "/submit",
@@ -76,8 +81,6 @@
                 dataType: "json",
                 statusCode: {
                     200: function(){
-                        console.log("time:" + time);
-                        counter++;
                         player.pause();
                         // $("#buttons").addClass('animated slideOutRight').delay(300).hide(1);
                         // $(document).ajaxStop(function(){
@@ -86,7 +89,7 @@
                         // console.log("hi");
                         // window.location.reload(true);
                         // player.pause();
-                        playmusic(counter);
+                        playmusic();
                     }
                 },
             // error: function() {
@@ -98,82 +101,75 @@
             });
             // window.location.reload(true);
         };
+        
+        function getRandomNums(len, max) {
+            var arr = [];
+            while (arr.length < len){
+                var randomnumber = Math.ceil(Math.random() * max)
+                if (arr.indexOf(randomnumber) > -1) {
+                    continue;
+                }
+                arr[arr.length] = randomnumber;
+            }
+            return arr;
+        }
+        
         function playmusic() {
-                // newBar();
-                $("#buttons").addClass('animated slideInLeft');
-                date = new Date();
-                var songs = JSON.parse(htmlDecode("<%= JSON.stringify(MUSIC) %>"));
-                var counter = getRandomInt(0, 39);
-                if (used.indexOf(counter) == -1) {
-                    counter = getRandomInt(0, 39);
+            // newBar();
+            $("#buttons").addClass('animated slideInLeft');
+            
+            var songs = JSON.parse(htmlDecode("<%= JSON.stringify(MUSIC) %>"));            
+            /* get four random numbers in 0 to 39
+             * the correct song will be at index 0 */
+            arr = getRandomNums(4, 39);
+            counter = arr[0];
+            
+            /* get a random song that hasn't been played before */
+            if (index != 0) {
+                while (used.indexOf(counter) != -1) {
+                    arr = getRandomNums(4, 39);
+                    counter = arr[0];
                 }
-                used[index] = counter;
-                index++;
+            }
+            
+            /* store the song in the used collection so that it isn't replayed */
+            used[index] = counter;
+            index++;  
 
-                player = new Audio(songs[counter].url);
-                
-                var wrong1 = getRandomInt(0, 39), wrong2 = getRandomInt(0, 39), wrong3 = getRandomInt(0, 39);
-                while (wrong1 == counter || wrong2 == counter || wrong3 == counter) {
-                    if (wrong1 == counter || wrong1 == wrong2 || wrong1 == wrong3) {
-                        wrong1 = getRandomInt(0, 39);
-                    }
-                    if (wrong2 == counter || wrong2 == wrong3) {
-                        wrong2 = getRandomInt(0, 39);
-                    }
-                    if (wrong3 == counter) {
-                        wrong3 = getRandomInt(0, 39);
-                    }
-                }
-                correctAns = getRandomInt(1, 4);
-                console.log(songs[counter].name);
-                switch (correctAns) {
-                    case 1:
-                        document.getElementById("song1").innerHTML = songs[counter].name;
-                        document.getElementById("song2").innerHTML = songs[wrong1].name;
-                        document.getElementById("song3").innerHTML = songs[wrong2].name;
-                        document.getElementById("song4").innerHTML = songs[wrong3].name;
-                        break;
-                    case 2:
-                        document.getElementById("song2").innerHTML = songs[counter].name;
-                        document.getElementById("song1").innerHTML = songs[wrong1].name;
-                        document.getElementById("song3").innerHTML = songs[wrong2].name;
-                        document.getElementById("song4").innerHTML = songs[wrong3].name;
-                        break;
-                    case 3:
-                        document.getElementById("song3").innerHTML = songs[counter].name;
-                        document.getElementById("song2").innerHTML = songs[wrong1].name;
-                        document.getElementById("song1").innerHTML = songs[wrong2].name;
-                        document.getElementById("song4").innerHTML = songs[wrong3].name;
-                        break;
-                    case 4:
-                        document.getElementById("song4").innerHTML = songs[counter].name;
-                        document.getElementById("song2").innerHTML = songs[wrong1].name;
-                        document.getElementById("song3").innerHTML = songs[wrong2].name;
-                        document.getElementById("song1").innerHTML = songs[wrong3].name;
-                        break;
-                    default:
-                        break;
-                }
-                
-                /*
-                if (counter >= 10 && counter <= 37) {
-                        correctAns = 1;
-                        document.getElementById("song1").innerHTML = songs[counter].name;
-                        document.getElementById("song2").innerHTML = songs[counter + 3].name;
-                        document.getElementById("song3").innerHTML = songs[counter - 3].name;
-                        document.getElementById("song4").innerHTML = songs[counter + 1].name;
-                } else if (counter <= 30 && counter > 0) {
-                        correctAns = 2;
-                        document.getElementById("song1").innerHTML = songs[counter + 10].name;
-                        document.getElementById("song2").innerHTML = songs[counter].name;
-                        document.getElementById("song3").innerHTML = songs[counter + 5].name;
-                        document.getElementById("song4").innerHTML = songs[counter - 1].name;
-                }
-                else if () {
-                    
-                }
-                */
-                player.autoplay = true;
+            player = new Audio(songs[counter].url);
+            console.log(songs[counter].name);
+            
+            /* randomly choose the position in the list of songs */
+            correctPos = getRandomInt(1, 4);
+            switch (correctPos) {
+                case 1:
+                    document.getElementById("song1").innerHTML = songs[counter].name;
+                    document.getElementById("song2").innerHTML = songs[arr[1]].name;
+                    document.getElementById("song3").innerHTML = songs[arr[2]].name;
+                    document.getElementById("song4").innerHTML = songs[arr[3]].name;
+                    break;
+                case 2:
+                    document.getElementById("song2").innerHTML = songs[counter].name;
+                    document.getElementById("song1").innerHTML = songs[arr[1]].name;
+                    document.getElementById("song3").innerHTML = songs[arr[2]].name;
+                    document.getElementById("song4").innerHTML = songs[arr[3]].name;
+                    break;
+                case 3:
+                    document.getElementById("song3").innerHTML = songs[counter].name;
+                    document.getElementById("song2").innerHTML = songs[arr[1]].name;
+                    document.getElementById("song1").innerHTML = songs[arr[2]].name;
+                    document.getElementById("song4").innerHTML = songs[arr[3]].name;
+                    break;
+                case 4:
+                    document.getElementById("song4").innerHTML = songs[counter].name;
+                    document.getElementById("song2").innerHTML = songs[arr[1]].name;
+                    document.getElementById("song3").innerHTML = songs[arr[2]].name;
+                    document.getElementById("song1").innerHTML = songs[arr[3]].name;
+                    break;
+                default:
+                    break;
+            }
+            player.autoplay = true;
         }
 
         function htmlDecode(input){
