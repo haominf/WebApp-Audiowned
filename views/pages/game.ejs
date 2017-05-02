@@ -16,37 +16,23 @@
     <script src="static/js/bootstrap.min.js"></script>
     <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.6.1/dist/progressbar.js"></script>
     <script>
+        var round = 1;
         var date;
         var counter = 1;
         var index = 0;
         var used = [];
+        var used = new Array(10);
+        var bar;
 
-        // function newBar() {
-        //         date = new Date();
-        //         var bar = new ProgressBar.Line(progress, {
-        //                 strokeWidth: 4,
-        //                 duration: 30000,
-        //                 color: '#FFEA82',
-        //                 trailColor: '#eee',
-        //                 trailWidth: 1,
-        //                 svgStyle: {width: '100%', height: '100%'},
-        //                 from: {color: '#5AFE32'},
-        //                 to: {color: '#FA483F'},
-        //                 step: (state, bar) => {
-        //                 bar.path.setAttribute('stroke', state.color);
-        //                 }
-        //         });
-        //         bar.animate(1.0);
-        // }
         $(document).ready(function(){
             for (var i = 0; i < used.length; i++) {
                 used[i] = 0;
             }
             date = new Date();
             
-            var bar = new ProgressBar.Line(progress, {
+            bar = new ProgressBar.Line(progress, {
                     strokeWidth: 4,
-                    duration: 30000,
+                    duration: 10000,
                     color: '#FFEA82',
                     trailColor: '#eee',
                     trailWidth: 1,
@@ -59,8 +45,19 @@
             });
             bar.animate(1.0);
         });
-        
+
         function sendChoice(num) {
+                if (round == 8) {
+                        $("#gamePage").addClass('animated slideOutRight');
+                         setTimeout(function(){
+                                 window.location.href='/win';
+                         }, 800);
+                }
+            round += 1;
+            document.getElementById('loadheader').innerHTML = "ROUND " + round;
+            bar.set(0.0);
+            bar.animate(1.0);
+
             var currTime = new Date();
             var time = Math.floor((currTime.getTime() - date.getTime()) / 1000);
             if (num != correctPos) {
@@ -72,34 +69,27 @@
             var newScore = parseInt(oldScore) + score;
             document.getElementById('ownScore').innerHTML = "SCORE: " + newScore;
 
+
             $.ajax({
                 type: "POST",
                 url: "/submit",
                 data: {
                     "score": score,
+                    "round": round,
                 },
                 dataType: "json",
                 statusCode: {
                     200: function(){
                         player.pause();
-                        // $("#buttons").addClass('animated slideOutRight').delay(300).hide(1);
-                        // $(document).ajaxStop(function(){
-                        //         window.location.reload(true);
-                        //     });
-                        // console.log("hi");
-                        // window.location.reload(true);
-                        // player.pause();
-                        playmusic();
+                        playmusic(counter);
                     }
                 },
-            // error: function() {
-            //         console.log("error");
-            //         counter++;
-            //         player.pause();
-            //         playmusic(counter);
-            // }
+                error: function() {
+                    console.log("error");
+                    counter++;
+                    player.pause();
+                }
             });
-            // window.location.reload(true);
         };
         
         function getRandomNums(len, max) {
@@ -183,31 +173,19 @@
         }
 
         setTimeout(function(){
-               $("#gamePage").addClass('animated slideOutRight');
-                setTimeout(function(){
-                        window.location.reload(true);
-                }, 800);
-        }, 30000);
+               sendChoice(10);
+        }, 10000);
        </script>
 
 </head>
 <div id="gamePage" >
 <body onload="playmusic()" class="animated slideInLeft">
-
-            <source src="bgmusic.mp3" type="audio/mpeg">
-        <!-- <audio autoplay loop>
-            <source src="bgmusic.mp3" type="audio/mpeg">
-        </audio>
-        <audio controls autoplay>
-            <source src="bgmusic.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio> -->
         <header>
-              <h1 id="loadheader">ROUND 3</h1>
+              <h1 id="loadheader">ROUND 1</h1>
         </header>
         <div id="pics">
                 <div id="userpic">
-                    <img src="https://scontent.fluk1-1.fna.fbcdn.net/v/t31.0-8/16707354_1270731589629046_5534878168568381697_o.jpg?oh=51f6c7e662abb9b9ad3e9d619ab21f88&oe=59556726" alt="l8k8" width=150px>
+                    <img src=<%=player_pic%> alt="userpic" width=150px>
                 </div>
                 <div id="progress"></div>
                 <div id="opppic">
