@@ -16,109 +16,27 @@
         <!-- Latest compiled JavaScript -->
        <script src="js/bootstrap.min.js"></script>
        <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.6.1/dist/progressbar.js"></script>
-       <script>
-                $(document).ready(function(){
-                       var bar = new ProgressBar.Line(progress, {
-                               strokeWidth: 4,
-                               duration: 30000,
-                               color: '#FFEA82',
-                               trailColor: '#eee',
-                               trailWidth: 1,
-                               svgStyle: {width: '100%', height: '100%'},
-                               from: {color: '#5AFE32'},
-                               to: {color: '#FA483F'},
-                               step: (state, bar) => {
-                               bar.path.setAttribute('stroke', state.color);
-                               }
-                       });
-
-                       bar.animate(1.0);
-               });
-
-               function sendChoice(num) {
-                       $.ajax({
-                                type: "POST",
-                                url: "audiowned.herokuapp.com/submit",
-                                data: { data1: num},
-                                // contentType: "application/json; charset=utf-8",
-                                dataType: "json",
-                                success: function(){
-                                        console.log("success");
-                                },
-                                statusCode: {
-                                        console.log("before 200");
-                                        200: function(){
-                                                console.log("hledkjalkd");
-                                                window.location.href="/index";
-                                        }
-                                },
-                                error: function() {
-                                        console.log("error");
-                                }
-
-                        });
-                        // var url = "https://www.audiowned.herokuapp.com/submit";
-                        // console.log(num);
-                        // var req = new XMLHttpRequest();
-                        // req.open("POST", url, true);
-                        // req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                        // req.send(num);
-
-                };
-
-
-                setTimeout(function(){
-                       $("#gamePage").addClass('animated slideOutRight');
-                        setTimeout(function(){
-                                window.location.href="/index";
-                        }, 800);
-                }, 30000);
-
-       </script>
+       <script src="js/gameplay.js"/>
 </head>
 
 <body>
         <div id="gamePage">
-        <!-- <audio autoplay loop>
-            <source src="bgmusic.mp3" type="audio/mpeg">
-        </audio>
-        <audio controls autoplay>
-            <source src="bgmusic.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio> -->
-
         <header>
-		<h1 id="loadheader">ROUND 3</h1>
+		        <h1 id="loadheader">ROUND 3</h1>
         </header>
-
         <div id="pics">
-
                 <div id="userpic">
-
                         <img src="https://scontent.fluk1-1.fna.fbcdn.net/v/t31.0-8/16707354_1270731589629046_5534878168568381697_o.jpg?oh=51f6c7e662abb9b9ad3e9d619ab21f88&oe=59556726" alt="l8k8" width=150px>
                 </div>
-
-
                 <div id="progress"></div>
-
-
                 <div id="opppic">
-
                         <img src="http://eadb.org/wp-content/uploads/2015/08/profile-placeholder.jpg" alt="placeholder" width=150px>
                 </div>
-
-
-
-
         </div>
         <div id="scores">
                 <h3 id="ownScore">SCORE: <%=ownScore=> </h3>
-
                 <h3 id="oppScore">SCORE: <%=oppScore=> </h3>
         </div>
-
-
-
         <div id="buttons">
                 <div>
                      <button class="button" onclick="sendChoice(1)" > <%=Song1%></button>
@@ -132,9 +50,7 @@
                 <div>
                     <button class="button" onclick="sendChoice(4)" > <%=Song3%> </button>
                 </div>
-
         </div>
         </div>
-
 </body>
 </html>
