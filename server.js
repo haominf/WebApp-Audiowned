@@ -10,13 +10,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // set port number
-app.set('port', (8888 || process.env.PORT));
+app.set('port', (process.env.PORT || 8888));
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 // make express look in the views/pages directory for assets (css/js/img)
 app.set('views', __dirname + '/views/pages');
 // virtual path prefix - "puts" css/js/img in this dir
 app.use('/static', express.static('public')).use(cookieParser());
+
 
 // mongo things
 var mongoUri = process.env.MONGODB_URI || process.env.MONGOLAB_URI ||
