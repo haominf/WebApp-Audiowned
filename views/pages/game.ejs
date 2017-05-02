@@ -52,7 +52,7 @@
             });
             bar.animate(1.0);
         });
-        
+
         function sendChoice(num) {
             var currTime = new Date();
             var time = currTime.getSeconds() - date.getSeconds();
@@ -147,25 +147,8 @@
                         document.getElementById("song1").innerHTML = songs[wrong3].name;
                         break;
                 }
-                
-                /*
-                if (counter >= 10 && counter <= 37) {
-                        correctAns = 1;
-                        document.getElementById("song1").innerHTML = songs[counter].name;
-                        document.getElementById("song2").innerHTML = songs[counter + 3].name;
-                        document.getElementById("song3").innerHTML = songs[counter - 3].name;
-                        document.getElementById("song4").innerHTML = songs[counter + 1].name;
-                } else if (counter <= 30 && counter > 0) {
-                        correctAns = 2;
-                        document.getElementById("song1").innerHTML = songs[counter + 10].name;
-                        document.getElementById("song2").innerHTML = songs[counter].name;
-                        document.getElementById("song3").innerHTML = songs[counter + 5].name;
-                        document.getElementById("song4").innerHTML = songs[counter - 1].name;
-                }
-                else if () {
-                    
-                }
-                */
+
+
                 player.autoplay = true;
         }
 
